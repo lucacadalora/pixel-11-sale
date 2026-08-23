@@ -12,7 +12,7 @@
     return map[key] || map["256"] || 0;
   }
 
-  function compute(modelId, storage) {
+  function compute(modelId, storage, opts) {
     const sgdAmt = officialSgd(modelId, storage);
     const gst = CFG.gst == null ? 0.09 : CFG.gst;
     const fxSgd = CFG.fxSgdIdr || 13936;
@@ -25,7 +25,7 @@
     const exGstSgd = sgdAmt / (1 + gst);
     const exGstIdr = exGstSgd * fxSgd;
     const gstRefundIdr = officialIdr - exGstIdr;
-    const pibIdr = pibUsd * fxUsd;
+    const pibIdr = opts && opts.skipPib ? 0 : pibUsd * fxUsd;
     const taxableIdr = Math.max(0, exGstIdr - pibIdr);
     const bmIdr = taxableIdr * bmRate;
     const ppnIdr = (taxableIdr + bmIdr) * ppnRate;
@@ -49,6 +49,13 @@
       estimateIdr: officialIdr,
       profitIdr: gstRefundIdr + markupIdr
     };
+  }
+
+  function computeCart(entries) {
+    const list = (entries || []).filter(Boolean);
+    return list.map(function (e, i) {
+      return compute(e.modelId, e.storage, { skipPib: i > 0 });
+    });
   }
 
   function idr(n) {
@@ -98,6 +105,7 @@
 
   window.PIXEL_PRICE = {
     compute: compute,
+    computeCart: computeCart,
     breakdownRows: breakdownRows,
     breakdownLines: breakdownLines,
     officialSgd: officialSgd
