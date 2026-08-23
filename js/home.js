@@ -17,22 +17,22 @@
       roleJatevo: "sovereign AI",
       roleShop: "singapore gadgets into indonesia · tokopedia",
       roleItb: "Bachelor, Chemical Engineering",
-      nowBody: "sealed pixel 11 from changi. reserve on the sale page. collaborative review incoming with nerd reviews.",
-      payBody: "this is my page, not a faceless shop. reserve a phone, then transfer to my personal rekening. i send the account on x or linkedin after you reserve, so you know who you are paying.",
+      nowBody: "sealed pixel 11 from changi. add to bag on the sale page. collaborative review incoming with nerd reviews.",
+      payBody: "this is my page, not a faceless shop. add a phone, then pay on stripe checkout — card, apple pay, or google pay. i'll ping you on x or linkedin about delivery.",
       linkSale: "shop pixel 11",
       linkTokped: "tokopedia / gadgetsing",
       linkNerd: "nerd reviews",
       linkLinkedin: "linkedin",
       linkX: "x / lucaxyzz",
-      payWire: "wire bank transfer",
-      payOnchain: "onchain",
-      payLocal: "local",
-      payIdr: "IDR transfer to my personal bank account",
+      payWire: "cards",
+      payOnchain: "wallets",
+      payLocal: "also",
+      payIdr: "apple pay / google pay on stripe",
       faqTitle: "how this works",
-      faqLead: "pick a type, ping me, we deal. then i fly to singapore.",
+      faqLead: "pick a type, checkout, then i fly to singapore.",
       intro: [
         "tech entrepreneur. i start and ship companies from indonesia, then get out of the way.",
-        "i build AI products (jatevo, vantis) and i also move sealed phones from singapore to jakarta. same person on x and linkedin, same person you transfer to."
+        "i build AI products (jatevo, vantis) and i also move sealed phones from singapore to jakarta. same person on x and linkedin."
       ]
     },
     id: {
@@ -51,22 +51,22 @@
       roleJatevo: "sovereign AI",
       roleShop: "gadget singapura ke indonesia · tokopedia",
       roleItb: "S1 Teknik Kimia",
-      nowBody: "pixel 11 sealed dari changi. reservasi di halaman sale. review bareng nerd reviews segera.",
-      payBody: "ini halaman saya, bukan toko tanpa muka. reservasi HP, lalu transfer ke rekening pribadi. nomor rekening saya kirim di x atau linkedin setelah reservasi, supaya jelas ke siapa uangnya.",
+      nowBody: "pixel 11 sealed dari changi. masukkan ke bag di halaman sale. review bareng nerd reviews segera.",
+      payBody: "ini halaman saya, bukan toko tanpa muka. masukkan HP, lalu bayar di stripe checkout — kartu, apple pay, atau google pay. saya hubungi di x atau linkedin soal pengiriman.",
       linkSale: "shop pixel 11",
       linkTokped: "tokopedia / gadgetsing",
       linkNerd: "nerd reviews",
       linkLinkedin: "linkedin",
       linkX: "x / lucaxyzz",
-      payWire: "transfer bank luar negeri",
-      payOnchain: "onchain",
-      payLocal: "lokal",
-      payIdr: "transfer IDR ke rekening pribadi saya",
+      payWire: "kartu",
+      payOnchain: "dompet",
+      payLocal: "juga",
+      payIdr: "apple pay / google pay di stripe",
       faqTitle: "cara kerjanya",
-      faqLead: "pilih tipe, chat saya, kita deal. lalu saya terbang ke singapura.",
+      faqLead: "pilih tipe, checkout, lalu saya terbang ke singapura.",
       intro: [
         "entrepreneur teknologi. saya mulai dan kirim perusahaan dari indonesia.",
-        "saya bangun produk AI (jatevo, vantis) dan juga bawa HP sealed dari singapura ke jakarta. orang yang sama di x dan linkedin, orang yang sama yang menerima transfer."
+        "saya bangun produk AI (jatevo, vantis) dan juga bawa HP sealed dari singapura ke jakarta. orang yang sama di x dan linkedin."
       ]
     }
   };
