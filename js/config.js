@@ -9,7 +9,8 @@ window.PIXEL_CONFIG = {
   fxNote: "SGD Xe mid-market ~21 Aug 2026; USD JISDOR 21 Aug 2026",
   gst: 0.09,
   pibUsd: 500,
-  importRate: 0.21,
+  bmRate: 0.10,
+  ppnRate: 0.11,
   markupIdr: 5000000,
   askRoundTo: 50000,
   officialSgd: {
