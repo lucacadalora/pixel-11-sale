@@ -21,7 +21,7 @@
       continue: "continue",
       drawerTitle: "reserve pickup",
       name: "name",
-      whatsapp: "whatsapp / phone",
+      whatsapp: "x / phone",
       city: "city",
       note: "note",
       pickupDate: "pickup date",
@@ -33,7 +33,7 @@
       cancel: "cancel",
       submit: "send request",
       submitting: "sending…",
-      success: "noted – i'll whatsapp you to confirm.",
+      success: "noted – dm me on x or linkedin to confirm.",
       error: "didn't go through. try again?",
       total: "total",
       itemAdded: "{n} item added",
@@ -43,10 +43,10 @@
         "ask is built from official google store singapore, not ishopchangi. 256 gb list: pixel 11 s$1,299, pro s$1,599, pro xl s$1,819, fold s$2,499. higher storage is +s$200 a step.",
         "for 1 phone: official minus 9% gst, minus usd 500 pib, then bm 10% and ppn 11% on the rest (ppn sits on value + bm), plus rp 5.000.000 markup. my take is the gst refund plus that markup.",
         "two phones on one trip share the usd 500 exemption — ping me and i'll recompute.",
-        "reserve a color and storage, pick a window, send the request. i'll ping you on whatsapp."
+        "reserve a color and storage, pick a window, send the request. then dm me on x or linkedin."
       ],
       contactTitle: "contact",
-      contactBody: "whatsapp is fastest. email if you want a paper trail.",
+      contactBody: "dm me on x or linkedin.",
       footerIshop: "google store sg",
       priceInfo: "how this price is built",
       officialLabel: "official",
@@ -69,7 +69,7 @@
       continue: "continue",
       drawerTitle: "reservasi ambil",
       name: "nama",
-      whatsapp: "whatsapp / telepon",
+      whatsapp: "x / telepon",
       city: "kota",
       note: "catatan",
       pickupDate: "tanggal ambil",
@@ -81,7 +81,7 @@
       cancel: "batal",
       submit: "send request",
       submitting: "mengirim…",
-      success: "tercatat – saya whatsapp untuk konfirmasi.",
+      success: "tercatat – dm saya di x atau linkedin.",
       error: "tidak terkirim. coba lagi?",
       total: "total",
       itemAdded: "{n} item ditambah",
@@ -91,10 +91,10 @@
         "ask dari harga resmi google store singapura, bukan ishopchangi. 256 gb: pixel 11 s$1.299, pro s$1.599, pro xl s$1.819, fold s$2.499. storage lebih besar +s$200.",
         "untuk 1 hp: resmi minus gst 9%, minus pib usd 500, lalu bm 10% dan ppn 11% dari sisa (ppn dihitung dari nilai + bm), plus markup rp 5.000.000. untung saya = refund gst + markup itu.",
         "dua hp dalam satu trip berbagi pib usd 500 — chat, saya hitung ulang.",
-        "reservasi warna dan penyimpanan, pilih jendela, kirim. saya balas di whatsapp."
+        "reservasi warna dan penyimpanan, pilih jendela, kirim. lalu dm saya di x atau linkedin."
       ],
       contactTitle: "kontak",
-      contactBody: "whatsapp paling cepat. email kalau perlu jejak tertulis.",
+      contactBody: "dm saya di x atau linkedin.",
       footerIshop: "google store sg",
       priceInfo: "cara harga ini disusun",
       officialLabel: "resmi",
@@ -393,33 +393,11 @@
     setTimeout(() => node.remove(), 750);
   }
 
-  function buildWaMessage() {
-    const lines = [];
-    lines.push("Pixel 11 reserve");
-    lines.push(`name: ${state.form.name}`);
-    lines.push(`whatsapp: ${state.form.whatsapp}`);
-    lines.push(`city: ${state.form.city}`);
-    lines.push(`pickup: ${state.form.date} / ${state.form.window}`);
-    if (state.form.note) lines.push(`note: ${state.form.note}`);
-    lines.push("");
-    selectedEntries().forEach(({ v }) => {
-      lines.push(`- ${v.model} ${v.color} ${v.storage} · ${formatIdr(v.askIdr)} (official S$${v.officialSgd})`);
-    });
-    lines.push("");
-    lines.push(`total: ${formatIdr(selectedTotal())}`);
-    return lines.join("\n");
-  }
-
   function submitReserve(ev) {
     ev.preventDefault();
     if (!state.form.name.trim() || !state.form.whatsapp.trim()) return;
     saveContact();
-    const url =
-      "https://wa.me/" +
-      CFG.whatsappE164 +
-      "?text=" +
-      encodeURIComponent(buildWaMessage());
-    window.open(url, "_blank", "noopener");
+    window.open(CFG.xUrl || "https://x.com/lucaxyzz", "_blank", "noopener");
     state.sheetOpen = false;
     state.success = true;
     state.selected = [];
@@ -538,7 +516,7 @@
 
   function onScroll() {
     const btn = document.getElementById("scroll-to-top");
-    btn.classList.toggle("is-visible", window.scrollY > 240);
+    if (btn) btn.classList.toggle("is-visible", window.scrollY > 240);
   }
 
   function setNavCurrent() {
@@ -551,6 +529,13 @@
     });
   }
 
+  function setHref(id, href, text) {
+    const el = document.getElementById(id);
+    if (!el || !href) return;
+    el.href = href;
+    if (text) el.textContent = text;
+  }
+
   async function init() {
     if (window.PIXEL_CATALOG_READY) state.catalog = await window.PIXEL_CATALOG_READY;
     else if (window.PIXEL_CATALOG) state.catalog = window.PIXEL_CATALOG;
@@ -560,7 +545,8 @@
     }
     document.addEventListener("click", onClick);
     document.addEventListener("input", onInput);
-    document.getElementById("sale-reserve-form").addEventListener("submit", submitReserve);
+    const form = document.getElementById("sale-reserve-form");
+    if (form) form.addEventListener("submit", submitReserve);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("hashchange", setNavCurrent);
     window.addEventListener("keydown", (e) => {
@@ -569,12 +555,13 @@
         renderSheet();
       }
     });
-    document.getElementById("wa-link").href = "https://wa.me/" + CFG.whatsappE164;
-    document.getElementById("wa-link").textContent = CFG.whatsappDisplay;
-    document.getElementById("mail-link").href = "mailto:" + CFG.email;
-    document.getElementById("mail-link").textContent = CFG.email;
-    document.getElementById("footer-wa").href = "https://wa.me/" + CFG.whatsappE164;
-    document.getElementById("footer-mail").href = "mailto:" + CFG.email;
+    const xUrl = CFG.xUrl || "https://x.com/lucaxyzz";
+    const liUrl = CFG.linkedinUrl || "https://www.linkedin.com/in/lucacadalora";
+    const xLabel = CFG.xHandle ? "x.com/" + CFG.xHandle : "x.com/lucaxyzz";
+    setHref("x-link", xUrl, xLabel);
+    setHref("li-link", liUrl, "linkedin.com/in/lucacadalora");
+    setHref("footer-x", xUrl);
+    setHref("footer-li", liUrl);
     applyLocale();
     setNavCurrent();
     onScroll();
