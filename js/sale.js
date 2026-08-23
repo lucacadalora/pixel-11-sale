@@ -41,7 +41,7 @@
       howTitle: "how this works",
       howBody: [
         "ask is built from official google store singapore, not ishopchangi. 256 gb list: pixel 11 s$1,299, pro s$1,599, pro xl s$1,819, fold s$2,499. higher storage is +s$200 a step.",
-        "for 1 phone: official minus 9% gst, minus usd 500 pib, times 1.21 import (ppn 11% + bm 10%), plus rp 5.000.000 markup. my take is the gst refund plus that markup.",
+        "for 1 phone: official minus 9% gst, minus usd 500 pib, then bm 10% and ppn 11% on the rest (ppn sits on value + bm), plus rp 5.000.000 markup. my take is the gst refund plus that markup.",
         "two phones on one trip share the usd 500 exemption — ping me and i'll recompute.",
         "reserve a color and storage, pick a window, send the request. i'll ping you on whatsapp."
       ],
@@ -89,7 +89,7 @@
       howTitle: "cara kerjanya",
       howBody: [
         "ask dari harga resmi google store singapura, bukan ishopchangi. 256 gb: pixel 11 s$1.299, pro s$1.599, pro xl s$1.819, fold s$2.499. storage lebih besar +s$200.",
-        "untuk 1 hp: resmi minus gst 9%, minus pib usd 500, kali 1,21 bea (ppn 11% + bm 10%), plus markup rp 5.000.000. untung saya = refund gst + markup itu.",
+        "untuk 1 hp: resmi minus gst 9%, minus pib usd 500, lalu bm 10% dan ppn 11% dari sisa (ppn dihitung dari nilai + bm), plus markup rp 5.000.000. untung saya = refund gst + markup itu.",
         "dua hp dalam satu trip berbagi pib usd 500 — chat, saya hitung ulang.",
         "reservasi warna dan penyimpanan, pilih jendela, kirim. saya balas di whatsapp."
       ],
