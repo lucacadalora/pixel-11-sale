@@ -48,7 +48,9 @@
       contactTitle: "contact",
       contactBody: "whatsapp is fastest. email if you want a paper trail.",
       footerIshop: "google store sg",
-      priceInfo: "how this price is built"
+      priceInfo: "how this price is built",
+      officialLabel: "official",
+      askLabel: "ask"
     },
     id: {
       home: "home",
@@ -94,7 +96,9 @@
       contactTitle: "kontak",
       contactBody: "whatsapp paling cepat. email kalau perlu jejak tertulis.",
       footerIshop: "google store sg",
-      priceInfo: "cara harga ini disusun"
+      priceInfo: "cara harga ini disusun",
+      officialLabel: "resmi",
+      askLabel: "ask"
     }
   };
 
@@ -232,9 +236,24 @@
           })
           .join("");
         let pop = "";
-        if (open && window.PIXEL_PRICE) {
-          const lines = window.PIXEL_PRICE.breakdownLines(v, state.locale);
-          pop = '<div class="price-pop">' + lines.map((line) => "<p>" + line + "</p>").join("") + "</div>";
+        if (open && window.PIXEL_PRICE && window.PIXEL_PRICE.breakdownRows) {
+          const rows = window.PIXEL_PRICE.breakdownRows(v, state.locale);
+          pop =
+            '<ol class="price-pop">' +
+            rows
+              .map(function (r, i) {
+                return (
+                  "<li><span class=\"price-n\">" +
+                  (i + 1) +
+                  "</span><span class=\"price-name\">" +
+                  r.name +
+                  "</span><span class=\"price-cost\">" +
+                  r.cost +
+                  "</span></li>"
+                );
+              })
+              .join("") +
+            "</ol>";
         }
         return `<li class="sale-card${picked ? " sale-card--picked" : ""}" data-card="${card.id}">
           <div class="sale-card-media">
@@ -244,12 +263,16 @@
             <p class="sale-card-category">${card.category}</p>
             <h2 class="sale-card-title">${card.title}</h2>
             <div class="sale-card-price">
-              <span class="sale-price-row">
+              <p class="sale-price-line">
+                <span class="sale-price-k">${t("officialLabel")}</span>
                 <span class="sale-price-estimate">${formatIdr(v.estimateIdr)}</span>
+              </p>
+              <p class="sale-price-line sale-price-line--ask">
+                <span class="sale-price-k">${t("askLabel")}</span>
                 <span class="sale-price-ask">${formatIdr(v.askIdr)}</span>
                 <button type="button" class="price-info" data-price-info="${card.id}" aria-expanded="${open}" aria-label="${t("priceInfo")}">i</button>
-              </span>
-              <span class="sale-price-note">official S$${v.officialSgd}</span>
+              </p>
+              <span class="sale-price-note">S$${v.officialSgd}</span>
               ${pop}
             </div>
             <p class="sale-card-storage sale-chip-row">${chips}</p>
