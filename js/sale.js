@@ -263,16 +263,10 @@
             <p class="sale-card-category">${card.category}</p>
             <h2 class="sale-card-title">${card.title}</h2>
             <div class="sale-card-price">
-              <p class="sale-price-line">
-                <span class="sale-price-k">${t("officialLabel")}</span>
-                <span class="sale-price-estimate">${formatIdr(v.estimateIdr)}</span>
-              </p>
               <p class="sale-price-line sale-price-line--ask">
-                <span class="sale-price-k">${t("askLabel")}</span>
                 <span class="sale-price-ask">${formatIdr(v.askIdr)}</span>
                 <button type="button" class="price-info" data-price-info="${card.id}" aria-expanded="${open}" aria-label="${t("priceInfo")}">i</button>
               </p>
-              <span class="sale-price-note">S$${v.officialSgd}</span>
               ${pop}
             </div>
             <p class="sale-card-storage sale-chip-row">${chips}</p>
