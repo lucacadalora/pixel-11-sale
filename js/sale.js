@@ -11,7 +11,7 @@
       shop: "shop",
       title: "Pixel 11",
       intro:
-        "just landed in singapore via changi. reselling sealed pixel 11 in indonesia — jakarta pickup or courier. reserve a window, i'll confirm on whatsapp. prices from ishopchangi (sgd), asked in rupiah.",
+        "sealed pixel 11 from singapore. sticker is official google store sgd (full, with gst). tap i next to the ask to see gst refund, usd 500 pib, 21% import, and rp 5.000.000 markup. jakarta pickup or courier.",
       filterAll: "all",
       filter11: "pixel 11",
       filterPro: "pro",
@@ -41,17 +41,15 @@
       itemsAdded: "{n} items added",
       howTitle: "how this works",
       howBody: [
-        "sealed units from ishopchangi, singapore — tax-absorbed listings, still in wrap. i flew them in; i'm reselling in indonesia, not a google store and not changi.",
-        "jakarta pickup 23–30 aug, or courier if you're elsewhere. write the city. payment is transfer before courier, or cod if we meet.",
-        "pixel 11 keeps seven years of os, security, and pixel drops. dual sim (esim + esim / physical where the unit allows). tensor g6, the slim camera bar, the usual pixel camera stack.",
-        "the struck-through number is official singapore retail, converted at xe mid-market (1 sgd = 13,936 idr), no markup — an estimate. the ask is changi's from-price × 1.06, rounded to the nearest rp 50.000.",
-        "reserve a color and storage, pick a window, send the request. i'll ping you on whatsapp. if the unit's gone i'll say so."
+        "ask is built from official google store singapore, not ishopchangi. 256 gb list: pixel 11 s$1,299, pro s$1,599, pro xl s$1,819, fold s$2,499. higher storage is +s$200 a step.",
+        "for 1 phone: official minus 9% gst, minus usd 500 pib, times 1.21 import (ppn 11% + bm 10%), plus rp 5.000.000 markup. my take is the gst refund plus that markup.",
+        "two phones on one trip share the usd 500 exemption — ping me and i'll recompute.",
+        "reserve a color and storage, pick a window, send the request. i'll ping you on whatsapp."
       ],
       contactTitle: "contact",
       contactBody: "whatsapp is fastest. email if you want a paper trail.",
-      footerIshop: "ishopchangi",
-      localeEn: "en",
-      localeId: "id"
+      footerIshop: "google store sg",
+      priceInfo: "how this price is built"
     },
     id: {
       home: "home",
@@ -60,7 +58,7 @@
       shop: "shop",
       title: "Pixel 11",
       intro:
-        "baru mendarat di singapura lewat changi. jual pixel 11 masih sealed di indonesia — ambil di jakarta atau kurir. reservasi jendela, saya konfirmasi di whatsapp. harga dari ishopchangi (sgd), ditawarkan dalam rupiah.",
+        "pixel 11 sealed dari singapura. harga coret = ritel resmi google store sg. ketuk i di samping ask untuk lihat refund gst, pib usd 500, bea 21%, dan markup rp 5.000.000. ambil jakarta atau kurir.",
       filterAll: "semua",
       filter11: "pixel 11",
       filterPro: "pro",
@@ -90,17 +88,15 @@
       itemsAdded: "{n} item ditambah",
       howTitle: "cara kerjanya",
       howBody: [
-        "unit sealed dari ishopchangi, singapura — harga tax-absorbed, masih plastik. saya bawa masuk; ini reseller indonesia, bukan google store dan bukan changi.",
-        "ambil jakarta 23–30 agustus, atau kurir kalau di luar. tulis kotanya. transfer sebelum kurir, atau cod kalau ketemu.",
-        "pixel 11 dapat tujuh tahun update os, keamanan, dan pixel drop. dual sim. tensor g6, camera bar yang lebih tipis.",
-        "harga coret = ritel resmi singapura × 13.936, tanpa markup — estimasi. ask = harga changi × 1,06, dibulatkan ke rp 50.000 terdekat.",
+        "ask dari harga resmi google store singapura, bukan ishopchangi. 256 gb: pixel 11 s$1.299, pro s$1.599, pro xl s$1.819, fold s$2.499. storage lebih besar +s$200.",
+        "untuk 1 hp: resmi minus gst 9%, minus pib usd 500, kali 1,21 bea (ppn 11% + bm 10%), plus markup rp 5.000.000. untung saya = refund gst + markup itu.",
+        "dua hp dalam satu trip berbagi pib usd 500 — chat, saya hitung ulang.",
         "reservasi warna dan penyimpanan, pilih jendela, kirim. saya balas di whatsapp."
       ],
       contactTitle: "kontak",
       contactBody: "whatsapp paling cepat. email kalau perlu jejak tertulis.",
-      footerIshop: "ishopchangi",
-      localeEn: "en",
-      localeId: "id"
+      footerIshop: "google store sg",
+      priceInfo: "cara harga ini disusun"
     }
   };
 
@@ -112,7 +108,8 @@
     storageByCard: {},
     sheetOpen: false,
     success: false,
-    form: loadContact()
+    form: loadContact(),
+    openPrice: null
   };
 
   function loadSelected() {
@@ -167,14 +164,28 @@
 
   function variantFor(cardId, storage) {
     const st = (storage || "256").toLowerCase();
-    return state.catalog.variants.find((v) => v.id === cardId + "-" + st);
+    const raw = ((state.catalog && state.catalog.variants) || []).find((v) => v.id === cardId + "-" + st) || {};
+    const card = ((state.catalog && state.catalog.cards) || []).find((c) => c.id === cardId) || {};
+    const priced = window.PIXEL_PRICE
+      ? window.PIXEL_PRICE.compute(card.modelId, storage)
+      : { askIdr: raw.askIdr, officialSgd: raw.changiSgd, officialIdr: raw.estimateIdr };
+    return Object.assign({}, raw, priced, {
+      id: raw.id || cardId + "-" + st,
+      model: raw.model || card.category || "",
+      color: raw.color || card.title || "",
+      storage: raw.storage || storage,
+      askIdr: priced.askIdr,
+      estimateIdr: priced.officialIdr || priced.estimateIdr,
+      officialSgd: priced.officialSgd,
+      changiSgd: priced.officialSgd
+    });
   }
 
   function selectedEntries() {
     return state.selected
       .map((sel) => {
-        const v = state.catalog.variants.find((x) => x.id === sel.id);
-        return v ? { sel, v } : null;
+        const v = variantFor(sel.cardId, sel.storage);
+        return v && v.askIdr ? { sel: sel, v: v } : null;
       })
       .filter(Boolean);
   }
@@ -197,6 +208,7 @@
     if (intro) intro.textContent = L.intro;
     const how = document.getElementById("how-body");
     if (how) how.innerHTML = L.howBody.map((p) => "<p>" + p + "</p>").join("");
+    if (window.PIXEL_FAQ) window.PIXEL_FAQ.render(state.locale);
     document.querySelectorAll(".lang-switcher a").forEach((a) => {
       a.classList.toggle("current", a.dataset.locale === state.locale);
     });
@@ -214,12 +226,17 @@
         const storage = state.storageByCard[card.id] || card.defaultStorage;
         const v = variantFor(card.id, storage);
         const picked = isPicked(card.id);
+        const open = state.openPrice === card.id;
+        const lines = window.PIXEL_PRICE
+          ? window.PIXEL_PRICE.breakdownLines(v, state.locale)
+          : [];
         const chips = card.storages
           .map((st) => {
             const on = st === storage ? " is-on" : "";
             return `<button type="button" class="sale-chip${on}" data-storage="${st}" data-card="${card.id}">${st}</button>`;
           })
           .join("");
+        const pop = lines.map((line) => "<p>" + line + "</p>").join("");
         return `<li class="sale-card${picked ? " sale-card--picked" : ""}" data-card="${card.id}">
           <div class="sale-card-media">
             <img src="${card.photo}" alt="" loading="lazy" width="1200" height="900">
@@ -231,8 +248,10 @@
               <span class="sale-price-row">
                 <span class="sale-price-estimate">${formatIdr(v.estimateIdr)}</span>
                 <span class="sale-price-ask">${formatIdr(v.askIdr)}</span>
+                <button type="button" class="price-info" data-price-info="${card.id}" aria-expanded="${open}" aria-label="${t("priceInfo")}">i</button>
               </span>
-              <span class="sale-price-note">changi S$${v.changiSgd.toFixed(2)}</span>
+              <span class="sale-price-note">official S$${v.officialSgd}</span>
+              <span class="price-pop" ${open ? "" : "hidden"}>${pop}</span>
             </p>
             <p class="sale-card-storage sale-chip-row">${chips}</p>
             <p class="sale-card-contact">
@@ -289,7 +308,6 @@
     layer.hidden = !state.sheetOpen || state.selected.length === 0;
     document.body.classList.toggle("sheet-open", !layer.hidden);
     if (layer.hidden) return;
-
     const items = selectedEntries();
     const list = document.getElementById("sale-reserve-items");
     list.innerHTML =
@@ -307,7 +325,6 @@
         <span class="sale-reserve-item-title">${t("total")}</span>
         <span class="sale-reserve-item-price">${formatIdr(selectedTotal())}</span>
       </li>`;
-
     document.getElementById("chip-dates").innerHTML = state.catalog.pickup.dates.map(dateChip).join("");
     const hours = { anytime: "", morning: "09–12", afternoon: "13–17", evening: "18–21" };
     document.getElementById("chip-windows").innerHTML = state.catalog.pickup.windows
@@ -317,7 +334,6 @@
         return `<button type="button" class="sale-chip${on}" data-window="${w.id}">${t(w.id)}${h}</button>`;
       })
       .join("");
-
     document.getElementById("field-name").value = state.form.name;
     document.getElementById("field-whatsapp").value = state.form.whatsapp;
     document.getElementById("field-city").value = state.form.city;
@@ -332,7 +348,7 @@
     } else {
       const storage = state.storageByCard[cardId] || "256";
       const v = variantFor(cardId, storage);
-      state.selected.push({ id: v.id, cardId, storage });
+      state.selected.push({ id: v.id, cardId: cardId, storage: storage });
       fly(mediaEl);
     }
     saveSelected();
@@ -350,14 +366,7 @@
     const node = document.createElement("div");
     node.className = "sale-add-flight";
     node.style.cssText = `width:${start.width}px;height:${start.height}px;left:${start.left}px;top:${start.top}px;transition:transform .7s ease-in,opacity .7s ease-in;transform-origin:center center;`;
-    if (img) {
-      const clone = img.cloneNode(true);
-      node.appendChild(clone);
-    } else {
-      const dot = document.createElement("span");
-      dot.className = "sale-add-flight-dot";
-      node.appendChild(dot);
-    }
+    if (img) node.appendChild(img.cloneNode(true));
     document.body.appendChild(node);
     const dx = target.left - start.left - start.width / 2;
     const dy = target.top - start.top - start.height / 2;
@@ -378,7 +387,7 @@
     if (state.form.note) lines.push(`note: ${state.form.note}`);
     lines.push("");
     selectedEntries().forEach(({ v }) => {
-      lines.push(`- ${v.model} ${v.color} ${v.storage} · ${formatIdr(v.askIdr)} (changi S$${v.changiSgd.toFixed(2)})`);
+      lines.push(`- ${v.model} ${v.color} ${v.storage} · ${formatIdr(v.askIdr)} (official S$${v.officialSgd})`);
     });
     lines.push("");
     lines.push(`total: ${formatIdr(selectedTotal())}`);
@@ -415,6 +424,13 @@
       state.locale = locale.dataset.locale;
       localStorage.setItem("pixel11-locale", state.locale);
       applyLocale();
+      return;
+    }
+    const info = e.target.closest("[data-price-info]");
+    if (info) {
+      const id = info.getAttribute("data-price-info");
+      state.openPrice = state.openPrice === id ? null : id;
+      renderGrid();
       return;
     }
     const filter = e.target.closest("[data-filter]");
@@ -518,11 +534,9 @@
   }
 
   async function init() {
-    if (window.PIXEL_CATALOG_READY) {
-      state.catalog = await window.PIXEL_CATALOG_READY;
-    } else if (window.PIXEL_CATALOG) {
-      state.catalog = window.PIXEL_CATALOG;
-    } else {
+    if (window.PIXEL_CATALOG_READY) state.catalog = await window.PIXEL_CATALOG_READY;
+    else if (window.PIXEL_CATALOG) state.catalog = window.PIXEL_CATALOG;
+    else {
       const res = await fetch("catalog.json");
       state.catalog = await res.json();
     }
