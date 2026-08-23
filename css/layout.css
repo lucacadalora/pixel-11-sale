@@ -36,11 +36,6 @@ header.home-profile{
   header.home-profile{padding-top:.8rem;padding-bottom:.7rem}
   .sale-header,.journal-header,.home-header{padding-top:.4rem;padding-bottom:.9rem}
 }
-.sale-reserve-bar,
-.sale-reserve-sheet{
-  padding-left:var(--page-pad);
-  padding-right:var(--page-pad);
-}
 
 .flow{
   position:relative;
