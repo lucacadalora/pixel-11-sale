@@ -108,7 +108,16 @@ header.home-profile{
 .faq-notes{display:none}
 .faq-flow{margin:0;padding:0}
 
+.sale-grid,
+.sale-card,
+.sale-card-body,
+.sale-card-price{
+  overflow:visible;
+}
 .sale-card-price{position:relative}
+.sale-card:has(.price-info[aria-expanded="true"]){
+  z-index:4;
+}
 .sale-price-line--ask{
   display:flex;
   align-items:baseline;
@@ -162,7 +171,9 @@ header.home-profile{
 .price-n{opacity:.38}
 .price-name{
   opacity:.68;
-  overflow-wrap:anywhere;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
   padding-right:.35em;
 }
 .price-cost,
@@ -173,3 +184,24 @@ header.home-profile{
 }
 .price-pop,
 .price-pop *{text-decoration:none !important}
+
+@media (min-width:761px){
+  .price-pop{
+    position:absolute;
+    top:calc(100% + .35em);
+    left:0;
+    z-index:6;
+    box-sizing:border-box;
+    width:22.5em;
+    max-width:min(22.5em,70vw);
+    margin:0;
+    padding:.85em 1.05em 1em;
+    background:#fff;
+    border:1px solid currentColor;
+  }
+  .sale-card:nth-child(4n) .price-pop,
+  .sale-card:nth-child(4n-1) .price-pop{
+    left:auto;
+    right:0;
+  }
+}
