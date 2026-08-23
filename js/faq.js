@@ -1,51 +1,106 @@
 (function () {
-  const SPECS = {
-    en: `flowchart TD
-  pick["1. pick the type you want"] --> chat["2. contact me on whatsapp"]
-  chat --> trust{"direct deal or tokopedia?"}
-  trust -->|direct| pay["3. deal and pay me"]
-  trust -->|tokopedia| tp["we talk first, then i list it"]
-  tp --> tpfee["+10% plus tokopedia fees"]
-  pay --> fly["4. i go to singapore"]
-  tpfee --> fly
-  fly --> sched["i work from sg about twice a month"]
-  sched --> cap["max 2 devices per visit"]
-  cap --> tax["price includes customs tax ~21%"]
-  tax --> recv{"jakarta or shipment?"}
-  recv -->|jakarta| cod["COD in jakarta area"]
-  recv -->|ship| jne["JNE or other courier + insurance"]`,
-    id: `flowchart TD
-  pick["1. pilih tipe yang kamu mau"] --> chat["2. hubungi saya di whatsapp"]
-  chat --> trust{"deal langsung atau tokopedia?"}
-  trust -->|langsung| pay["3. deal dan bayar ke saya"]
-  trust -->|tokopedia| tp["kita ngobrol dulu, baru saya listing"]
-  tp --> tpfee["+10% plus biaya tokopedia"]
-  pay --> fly["4. saya ke singapura"]
-  tpfee --> fly
-  fly --> sched["kerja dari sg sekitar 2 kali sebulan"]
-  sched --> cap["maks 2 device per kunjungan"]
-  cap --> tax["harga sudah termasuk bea cukai ~21%"]
-  tax --> recv{"jakarta atau kirim?"}
-  recv -->|jakarta| cod["COD area jakarta"]
-  recv -->|ship| jne["JNE atau ekspedisi lain + asuransi"]`
-  };
-
-  const NOTES = {
+  const STEPS = {
     en: [
-      ["what do i pick?", "model, color, storage. start on the sale page, then whatsapp me the exact unit."],
-      ["how do we deal?", "i confirm stock on the next singapore trip, then you pay. rekening goes on whatsapp after you reserve, never on this page."],
-      ["when do you fly?", "i work from singapore about twice a month. i can bring max 2 devices per visit."],
-      ["is tax extra?", "no. the ask already includes customs tax, about 21% of the total."],
-      ["how do i receive it?", "COD in the jakarta area, or shipment via JNE / any logistics plus an insurance fee."],
-      ["what if i don't trust a direct transfer?", "we can do tokopedia. chat first so i can list the item. +10% because i float the buy with my own money, plus tokopedia fees."]
+      {
+        n: "01",
+        title: "pick the type you want",
+        body: "model, color, storage. start on the sale page, then tell me the exact unit."
+      },
+      {
+        n: "02",
+        title: "contact me",
+        body: "whatsapp is fastest. i confirm it against the next singapore trip."
+      },
+      {
+        n: "03",
+        title: "deal and pay",
+        body: "rekening goes on whatsapp after you reserve. never on this page.",
+        fork: [
+          {
+            label: "direct",
+            text: "transfer to me. usd / eur wire, usdt usdc usdg, or idr."
+          },
+          {
+            label: "tokopedia",
+            text: "if you don't trust a direct transfer: we talk first, then i list it. +10% because i float the buy with my own money, plus tokopedia fees."
+          }
+        ]
+      },
+      {
+        n: "04",
+        title: "i go to singapore",
+        body: "i work from singapore about twice a month. max 2 devices per visit."
+      },
+      {
+        n: "05",
+        title: "customs is in the price",
+        body: "the ask already includes tax paid at customs, about 21% of the total."
+      },
+      {
+        n: "06",
+        title: "you receive it",
+        fork: [
+          {
+            label: "jakarta",
+            text: "cod in the jakarta area."
+          },
+          {
+            label: "elsewhere",
+            text: "jne or any logistics, plus an insurance fee."
+          }
+        ]
+      }
     ],
     id: [
-      ["pilih apa?", "model, warna, penyimpanan. mulai di halaman sale, lalu whatsapp unit yang persis."],
-      ["deal-nya bagaimana?", "saya konfirmasi stok di trip singapura berikutnya, lalu kamu bayar. rekening dikirim di whatsapp setelah reservasi, tidak pernah di halaman ini."],
-      ["kapan terbang?", "saya kerja dari singapura sekitar dua kali sebulan. maksimal 2 device per kunjungan."],
-      ["pajak di luar harga?", "tidak. harga sudah termasuk bea cukai, sekitar 21% dari total."],
-      ["cara terima?", "COD area jakarta, atau kirim JNE / ekspedisi lain plus biaya asuransi."],
-      ["kalau belum percaya transfer langsung?", "bisa lewat tokopedia. chat dulu supaya saya listing. +10% karena saya belanja dulu pakai uang sendiri, plus biaya tokopedia."]
+      {
+        n: "01",
+        title: "pilih tipe yang kamu mau",
+        body: "model, warna, penyimpanan. mulai di halaman sale, lalu kabari unit yang persis."
+      },
+      {
+        n: "02",
+        title: "hubungi saya",
+        body: "whatsapp paling cepat. saya cocokkan dengan trip singapura berikutnya."
+      },
+      {
+        n: "03",
+        title: "deal dan bayar",
+        body: "rekening dikirim di whatsapp setelah reservasi. tidak pernah di halaman ini.",
+        fork: [
+          {
+            label: "langsung",
+            text: "transfer ke saya. usd / eur wire, usdt usdc usdg, atau idr."
+          },
+          {
+            label: "tokopedia",
+            text: "kalau belum percaya transfer langsung: chat dulu, baru saya listing. +10% karena saya belanja dulu pakai uang sendiri, plus biaya tokopedia."
+          }
+        ]
+      },
+      {
+        n: "04",
+        title: "saya ke singapura",
+        body: "kerja dari singapura sekitar dua kali sebulan. maks 2 device per kunjungan."
+      },
+      {
+        n: "05",
+        title: "bea cukai sudah masuk harga",
+        body: "harga sudah termasuk pajak ke bea cukai, sekitar 21% dari total."
+      },
+      {
+        n: "06",
+        title: "kamu terima",
+        fork: [
+          {
+            label: "jakarta",
+            text: "cod area jakarta."
+          },
+          {
+            label: "luar kota",
+            text: "jne atau ekspedisi lain, plus biaya asuransi."
+          }
+        ]
+      }
     ]
   };
 
@@ -53,50 +108,64 @@
     return localStorage.getItem("pixel11-locale") === "id" ? "id" : "en";
   }
 
-  async function render(loc) {
-    const host = document.getElementById("faq-flow");
-    const notes = document.getElementById("faq-notes");
-    const lang = loc === "id" ? "id" : "en";
-    if (notes) {
-      notes.innerHTML = NOTES[lang]
-        .map(([q, a]) => "<dt>" + q + "</dt><dd>" + a + "</dd>")
-        .join("");
-    }
-    if (!host || !window.mermaid) return;
-    try {
-      const { svg } = await window.mermaid.render("faqGraph" + Date.now(), SPECS[lang]);
-      host.innerHTML = svg;
-    } catch (err) {
-      host.textContent = "";
-      console.warn("faq mermaid", err);
-    }
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
   }
 
-  function boot() {
-    if (window.mermaid) {
-      window.mermaid.initialize({
-        startOnLoad: false,
-        securityLevel: "strict",
-        theme: "base",
-        themeVariables: {
-          fontFamily: "Geist Mono, IBM Plex Mono, ui-monospace, monospace",
-          fontSize: "14px",
-          primaryColor: "#f3f3f3",
-          primaryTextColor: "#111111",
-          primaryBorderColor: "#111111",
-          lineColor: "#111111",
-          secondaryColor: "#ffffff",
-          tertiaryColor: "#ffffff",
-          clusterBkg: "#ffffff",
-          clusterBorder: "#111111"
-        },
-        flowchart: { curve: "linear", htmlLabels: true, padding: 12 }
-      });
-    }
-    render(locale());
+  function render(loc) {
+    const host = document.getElementById("faq-flow");
+    const notes = document.getElementById("faq-notes");
+    if (notes) notes.innerHTML = "";
+    if (!host) return;
+    const lang = loc === "id" ? "id" : "en";
+    host.innerHTML = STEPS[lang]
+      .map((step) => {
+        const fork = (step.fork || [])
+          .map(
+            (p) =>
+              '<p class="faq-path"><span class="faq-path-label">' +
+              esc(p.label) +
+              "</span> " +
+              esc(p.text) +
+              "</p>"
+          )
+          .join("");
+        const body = step.body
+          ? '<p class="faq-body">' + esc(step.body) + "</p>"
+          : "";
+        return (
+          '<li class="faq-step">' +
+          '<span class="faq-n">' +
+          esc(step.n) +
+          "</span>" +
+          "<div>" +
+          '<p class="faq-title">' +
+          esc(step.title) +
+          "</p>" +
+          body +
+          (fork ? '<div class="faq-fork">' + fork + "</div>" : "") +
+          "</div>" +
+          "</li>"
+        );
+      })
+      .join("");
   }
 
   window.PIXEL_FAQ = { render: render };
+
+  function boot() {
+    const host = document.getElementById("faq-flow");
+    if (host && host.tagName !== "OL") {
+      const ol = document.createElement("ol");
+      ol.id = "faq-flow";
+      ol.className = "faq-flow";
+      host.replaceWith(ol);
+    }
+    render(locale());
+  }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);

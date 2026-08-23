@@ -29,7 +29,7 @@
       payLocal: "local",
       payIdr: "IDR transfer to my personal bank account",
       faqTitle: "how this works",
-      faqLead: "pick a type, ping me, we deal. then i fly to singapore. the chart is the faq.",
+      faqLead: "pick a type, ping me, we deal. then i fly to singapore.",
       intro: [
         "tech entrepreneur. i start and ship companies from indonesia, then get out of the way.",
         "i build AI products (jatevo, vantis) and i also move sealed phones from singapore to jakarta. same person on linkedin, same person you transfer to."
@@ -63,7 +63,7 @@
       payLocal: "lokal",
       payIdr: "transfer IDR ke rekening pribadi saya",
       faqTitle: "cara kerjanya",
-      faqLead: "pilih tipe, chat saya, kita deal. lalu saya terbang ke singapura. bagan ini faq-nya.",
+      faqLead: "pilih tipe, chat saya, kita deal. lalu saya terbang ke singapura.",
       intro: [
         "entrepreneur teknologi. saya mulai dan kirim perusahaan dari indonesia.",
         "saya bangun produk AI (jatevo, vantis) dan juga bawa HP sealed dari singapura ke jakarta. orang yang sama di linkedin, orang yang sama yang menerima transfer."

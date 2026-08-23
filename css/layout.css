@@ -33,8 +33,44 @@ header.home-profile{
   padding-right:var(--page-pad);
 }
 
-.faq-flow{margin:1.2em 0 0;overflow-x:auto}
-.faq-flow svg{max-width:100%;height:auto}
-.faq-notes{margin:1.6em 0 0;max-width:40em}
-.faq-notes dt{margin:1.05em 0 .3em;letter-spacing:.04em;opacity:.45}
-.faq-notes dd{margin:0;letter-spacing:.02em;opacity:.85}
+.faq-flow{
+  list-style:none;
+  margin:1.7em 0 0;
+  padding:0;
+  max-width:40em;
+}
+.faq-step{
+  display:grid;
+  grid-template-columns:2.4em minmax(0,1fr);
+  column-gap:.85em;
+  margin:0 0 1.55em;
+}
+.faq-n{
+  letter-spacing:.08em;
+  opacity:.35;
+}
+.faq-title{
+  font-family:var(--header-font-family);
+  font-size:1.15em;
+  font-weight:500;
+  letter-spacing:-.01em;
+  line-height:1.25em;
+  margin:0;
+}
+.faq-body{
+  letter-spacing:.02em;
+  margin:.35em 0 0;
+  opacity:.7;
+}
+.faq-fork{margin:.7em 0 0}
+.faq-path{
+  letter-spacing:.02em;
+  margin:0 0 .55em;
+  opacity:.75;
+}
+.faq-path:last-child{margin-bottom:0}
+.faq-path-label{
+  letter-spacing:.06em;
+  opacity:.45;
+}
+.faq-notes{display:none}
