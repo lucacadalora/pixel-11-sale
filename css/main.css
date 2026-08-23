@@ -40,15 +40,15 @@ a{color:#111;text-decoration:none}
   text-transform:uppercase;
 }
 .nav-bag.has-items{opacity:1}
-.nav-bag-n{margin-left:.4em}
 .h-list{display:flex;list-style:none;margin:0;padding-left:0}
 .h-list li{margin-right:1.2vw}
 .sale-header{font-size:4.5vw;padding:6vw 10vw 5vw}
 .sale-intro{margin:0 0 2.5em;max-width:36em;opacity:.7}
-.sale-grid{display:grid;gap:2rem 1.5rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));list-style:none;margin:0 0 6em;padding:0}
-.sale-card{display:flex;flex-direction:column}
+.sale-grid{display:grid;gap:2rem 1.5rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));list-style:none;margin:0 0 6em;padding:0;align-items:stretch}
+.sale-card{display:flex;flex-direction:column;height:100%}
 .sale-card-media{aspect-ratio:4/3;background:#fff;margin-bottom:.85em;overflow:hidden}
 .sale-card-media img{display:block;height:100%;object-fit:contain;width:100%}
+.sale-card-body{display:flex;flex-direction:column;flex:1}
 .sale-card-category{font-size:.85em;letter-spacing:.08em;margin:0 0 .35em;opacity:.45;text-transform:uppercase}
 .sale-card-title{font-size:1.35em;font-weight:500;margin:0 0 .35em}
 .sale-price-row{display:inline-flex;flex-wrap:wrap;gap:.45em .65em}
@@ -58,7 +58,8 @@ a{color:#111;text-decoration:none}
 .sale-chip.is-on{border-color:color-mix(in srgb,currentColor 35%,transparent)}
 .sale-chip-row{display:flex;flex-wrap:wrap;gap:.45rem .55rem}
 .sale-filter{margin:0 0 2em}
-.sale-card-storage{margin:0 0 .65em}
+.sale-card-storage{margin:0 0 .65em;min-height:2.35em}
+.sale-card-contact{margin-top:auto;padding-top:.2em}
 .sale-price-note{display:block;margin:.25em 0 0;opacity:.4;font-size:.92em}
 .sale-copy{max-width:36em;margin:0 0 1.4em}
 .sale-copy h2{font-family:var(--header-font-family);font-size:1.35em;font-weight:500;margin:0 0 .55em}
