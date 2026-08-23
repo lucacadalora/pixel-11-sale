@@ -1,0 +1,67 @@
+/* --- pixel-site: fonts + sale extras (keep ryo sale-* intact) --- */
+:root{
+  --header-font-family:"Geist","Schibsted Grotesk",nbintl,sans-serif;
+  --body-font-family:"Geist Mono","IBM Plex Mono",nbintl-mono,ui-monospace,monospace;
+}
+body{font-family:var(--body-font-family);margin:0;padding:0;background:#fff;color:#111}
+.big,.sale-card-title,.sale-reserve-sheet-head h2,.journal-entry-title{
+  font-family:var(--header-font-family)
+}
+.small{font-size:1.33333vw;letter-spacing:.05em;line-height:1.2em}
+@media (min-width:1440px){.sale-reserve-bar,.sale-reserve-sheet,.small{font-size:16px;line-height:1.3em}}
+@media (max-width:760px){.sale-reserve-bar,.sale-reserve-sheet,.small{font-size:12px;line-height:1.3em}}
+a{color:#111;text-decoration:none}
+.small a{text-decoration:underline;text-underline-offset:.18em}
+.page-top-nav{max-width:1510px;padding:2.5vw 10vw 0;text-transform:uppercase}
+.page-top-nav a{opacity:.4}
+.page-top-nav a.current{opacity:1}
+.h-list{display:flex;list-style:none;padding-left:0}
+.h-list li{margin-right:1.2vw}
+.sale-header{font-size:4.5vw;padding:6vw 10vw 5vw}
+.sale-intro{margin:0 0 2.5em;max-width:36em;opacity:.7}
+.sale-grid{display:grid;gap:2rem 1.5rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));list-style:none;margin:0 0 6em;padding:0}
+.sale-card{display:flex;flex-direction:column}
+.sale-card-media{aspect-ratio:4/3;background:#fff;margin-bottom:.85em;overflow:hidden}
+.sale-card-media img{display:block;height:100%;object-fit:contain;width:100%}
+.sale-card-category{font-size:.85em;letter-spacing:.08em;margin:0 0 .35em;opacity:.45;text-transform:uppercase}
+.sale-card-title{font-size:1.35em;font-weight:500;margin:0 0 .35em}
+.sale-price-row{display:inline-flex;flex-wrap:wrap;gap:.45em .65em}
+.sale-price-estimate{opacity:.4;text-decoration:line-through}
+.sale-chip,.sale-reserve-btn,.sale-reserve-cancel,.sale-reserve-submit{appearance:none;background:none;border:0;color:inherit;cursor:pointer;font:inherit}
+.sale-chip{border:1px solid transparent;border-radius:.45em;padding:.35em .7em}
+.sale-chip.is-on{border-color:color-mix(in srgb,currentColor 35%,transparent)}
+.sale-chip-row{display:flex;flex-wrap:wrap;gap:.45rem .55rem}
+.sale-filter{margin:0 0 2em}
+.sale-card-storage{margin:0 0 .65em}
+.sale-price-note{display:block;margin:.25em 0 0;opacity:.4;font-size:.92em}
+.sale-copy{max-width:36em;margin:0 0 1.4em}
+.sale-copy h2{font-family:var(--header-font-family);font-size:1.35em;font-weight:500;margin:0 0 .55em}
+footer.page-footer{display:flex;max-width:1510px;padding:2vw 10vw 8vw;text-transform:uppercase}
+footer.page-footer>div{flex:1 1}
+.lang-switcher a{opacity:.4}
+.lang-switcher a.current{opacity:1}
+.sale-reserve-layer[hidden],.sale-reserve-bar[hidden],.sale-reserve-confirm[hidden]{display:none !important}
+.sale-reserve-layer:not([hidden]){display:flex}
+.sale-reserve-bar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:.9em 10vw;background:#111;color:#fff;z-index:30}
+.sale-reserve-layer{position:fixed;inset:0;align-items:flex-end;z-index:50}
+.sale-reserve-backdrop{position:absolute;inset:0;background:#11111147;border:0}
+.sale-reserve-sheet{position:relative;background:#fff;width:100%;max-height:88vh;overflow:auto;padding:3.5rem 10vw 2.5rem}
+.sale-reserve-form{display:grid;gap:1.1rem;width:min(42rem,100%);margin:0 auto}
+.sale-reserve-form input,.sale-reserve-form textarea{border:0;border-bottom:1px solid #1113;font:inherit;width:100%;padding:.45em 0}
+.home-profile{display:flex;align-items:center;gap:1.6rem;max-width:1510px;padding:1.2rem 10vw .8rem}
+.home-photo{width:min(9.5rem,28vw);height:min(9.5rem,28vw);object-fit:cover;border-radius:50%;object-position:50% 18%}
+.home-name{font-size:clamp(28px,4.2vw,64px);line-height:1.15;margin:0 0 .25em}
+.home-headline{margin:0 0 .45em;opacity:.75}
+.home-meta{margin:0;opacity:.5}
+.home-block{margin:0 0 2.6em;max-width:36em}
+.home-block h2{font-family:var(--header-font-family);font-size:1.35em;font-weight:500;margin:0 0 .7em}
+.home-cv{list-style:none;margin:0;padding:0}
+.home-cv li{margin:0 0 1em}
+.home-cv-role{display:block;margin-top:.2em;opacity:.5}
+.pay-list{list-style:none;margin:1.1em 0 0;padding:0}
+.pay-group-label{margin:1em 0 .45em;opacity:.4}
+.pay-row{display:flex;align-items:center;gap:.7em;margin:0 0 .55em}
+.pay-logo{width:1.35em;height:1.35em;object-fit:cover}
+.pay-logo.pay-flag{border-radius:.12em;height:1em;width:1.4em}
+.scroll-to-top{position:fixed;right:2.5vw;bottom:2.5vw;opacity:0;border:0;background:none;pointer-events:none}
+.scroll-to-top.is-visible{opacity:.45;pointer-events:auto}
