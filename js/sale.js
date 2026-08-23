@@ -25,7 +25,7 @@
       reserved: "in bag",
       continue: "checkout",
       drawerTitle: "bag",
-      cancel: "cancel",
+      cancel: "close",
       success: "paid. i'll ping you on x or linkedin about delivery.",
       error: "couldn't start checkout. try again?",
       total: "total",
@@ -66,7 +66,7 @@
       reserved: "in bag",
       continue: "checkout",
       drawerTitle: "bag",
-      cancel: "batal",
+      cancel: "tutup",
       success: "sudah bayar. saya hubungi di x atau linkedin soal pengiriman.",
       error: "checkout gagal. coba lagi?",
       total: "total",
@@ -263,27 +263,21 @@
   }
 
   function renderBar() {
+    const bag = document.getElementById("nav-bag");
+    const count = document.getElementById("nav-bag-count");
+    const n = state.selected.length;
+    if (bag) {
+      bag.classList.toggle("has-items", n > 0);
+      bag.setAttribute("aria-expanded", state.sheetOpen ? "true" : "false");
+    }
+    if (count) {
+      count.hidden = n === 0;
+      count.textContent = n ? String(n) : "";
+    }
     const bar = document.getElementById("sale-reserve-bar");
     const confirm = document.getElementById("sale-reserve-confirm");
-    const sale = document.querySelector(".sale");
-    const n = state.selected.length;
-    if (state.success) {
-      bar.hidden = true;
-      confirm.hidden = false;
-      sale.classList.add("has-reserve-bar");
-      return;
-    }
-    confirm.hidden = true;
-    if (n === 0) {
-      bar.hidden = true;
-      sale.classList.remove("has-reserve-bar");
-      return;
-    }
-    bar.hidden = false;
-    sale.classList.add("has-reserve-bar");
-    const label = (n === 1 ? t("itemAdded") : t("itemsAdded")).replace("{n}", String(n));
-    document.getElementById("reserve-count").textContent = label;
-    document.getElementById("reserve-total").textContent = formatIdr(selectedTotal());
+    if (bar) bar.hidden = true;
+    if (confirm) confirm.hidden = true;
   }
 
   function renderSheet() {
@@ -291,6 +285,7 @@
     if (!layer) return;
     layer.hidden = !state.sheetOpen || state.selected.length === 0;
     document.body.classList.toggle("sheet-open", !layer.hidden);
+    renderBar();
     if (layer.hidden) return;
     const items = selectedEntries();
     const list = document.getElementById("sale-reserve-items");
@@ -343,7 +338,9 @@
     if (!mediaEl || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const start = mediaEl.getBoundingClientRect();
     if (!start.width) return;
-    const target = document.querySelector(".sale-reserve-target").getBoundingClientRect();
+    const targetEl = document.getElementById("nav-bag") || document.querySelector(".sale-reserve-target");
+    if (!targetEl) return;
+    const target = targetEl.getBoundingClientRect();
     const img = mediaEl.querySelector("img");
     const node = document.createElement("div");
     node.className = "sale-add-flight";
@@ -460,6 +457,7 @@
     }
     const open = e.target.closest("[data-open-sheet]");
     if (open) {
+      if (!state.selected.length) return;
       state.sheetOpen = true;
       renderSheet();
       return;
