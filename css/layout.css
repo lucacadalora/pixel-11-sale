@@ -109,24 +109,14 @@ header.home-profile{
 .faq-flow{margin:0;padding:0}
 
 .sale-card-price{position:relative}
-.sale-price-line{
-  display:grid;
-  grid-template-columns:5.4em minmax(0,1fr) auto;
-  align-items:baseline;
-  column-gap:.7em;
-  margin:0 0 .45em;
-}
-.sale-price-k{
-  letter-spacing:.04em;
-  opacity:.42;
-}
-.sale-price-estimate{
-  text-decoration:none !important;
-  opacity:.62;
-}
 .sale-price-line--ask{
-  margin-bottom:.2em;
+  display:flex;
+  align-items:baseline;
+  gap:.45em;
+  margin:0 0 .2em;
 }
+.sale-price-estimate,
+.sale-price-k{display:none}
 .price-info{
   appearance:none;
   background:none;
@@ -151,7 +141,7 @@ header.home-profile{
   display:none;
   list-style:none;
   margin:1.15em 0 0;
-  max-width:22em;
+  max-width:100%;
   padding:0;
 }
 .sale-card-price:has(.price-info[aria-expanded="true"]) .price-pop{
@@ -159,9 +149,9 @@ header.home-profile{
 }
 .price-pop li{
   display:grid;
-  grid-template-columns:1.4em minmax(0,1fr) auto;
+  grid-template-columns:1.5em minmax(0,1fr) max-content;
   align-items:baseline;
-  column-gap:.85em;
+  column-gap:.75em;
   padding:.7em 0;
   border-top:1px solid color-mix(in srgb, currentColor 14%, transparent);
 }
@@ -170,5 +160,16 @@ header.home-profile{
   padding-top:.15em;
 }
 .price-n{opacity:.38}
-.price-name{opacity:.68;padding-right:.5em}
-.price-cost{text-align:right;white-space:nowrap}
+.price-name{
+  opacity:.68;
+  overflow-wrap:anywhere;
+  padding-right:.35em;
+}
+.price-cost,
+.price-pop .price-cost{
+  text-align:right;
+  text-decoration:none !important;
+  white-space:nowrap;
+}
+.price-pop,
+.price-pop *{text-decoration:none !important}
