@@ -26,6 +26,10 @@
       <li><a href="sale.html" class="current" aria-current="page" data-i18n="sale">sale</a></li>
       <li><a href="https://www.tokopedia.com/gadgetsing" target="_blank" rel="noopener" data-i18n="shop">shop</a></li>
     </ul>
+    <button type="button" class="nav-bag" id="nav-bag" data-open-sheet>
+      <span data-i18n="bag">bag</span>
+      <span class="nav-bag-n" id="nav-bag-count" hidden></span>
+    </button>
   </nav>
 
   <header class="big sale-header" id="top">
@@ -83,32 +87,23 @@
     </div>
   </footer>
 
-  <span class="sale-reserve-target" aria-hidden="true"></span>
+  <span class="sale-reserve-target" id="nav-bag-target" aria-hidden="true"></span>
 
-  <div class="sale-reserve-bar" id="sale-reserve-bar" hidden>
-    <span>
-      <span id="reserve-count">0 in bag</span>
-      <span class="sale-reserve-bar-total" id="reserve-total"></span>
-    </span>
-    <button type="button" data-open-sheet data-i18n="checkout">checkout</button>
-  </div>
-
-  <div class="sale-reserve-bar sale-reserve-confirm" id="sale-reserve-confirm" role="status" hidden>
-    <span data-i18n="success">paid. i'll ping you on x or linkedin about delivery.</span>
-  </div>
+  <div class="sale-reserve-bar" id="sale-reserve-bar" hidden></div>
+  <div class="sale-reserve-bar sale-reserve-confirm" id="sale-reserve-confirm" role="status" hidden></div>
 
   <div class="sale-reserve-layer" id="sale-reserve-layer" hidden>
     <button type="button" class="sale-reserve-backdrop" data-close-sheet aria-label="close"></button>
     <section class="sale-reserve-sheet" role="dialog" aria-modal="true" aria-labelledby="sale-reserve-title">
       <header class="sale-reserve-sheet-head">
         <h2 id="sale-reserve-title" data-i18n="drawerTitle">bag</h2>
-        <button type="button" class="sale-reserve-cancel" data-close-sheet data-i18n="cancel">cancel</button>
+        <button type="button" class="sale-reserve-cancel" data-close-sheet data-i18n="cancel">close</button>
       </header>
       <ul class="sale-reserve-items" id="sale-reserve-items"></ul>
       <div class="sale-reserve-form" id="sale-reserve-form">
         <p class="sale-reserve-error" id="sale-reserve-error" hidden data-i18n="error">couldn't start checkout. try again?</p>
         <div class="sale-reserve-actions">
-          <button type="button" class="sale-reserve-cancel" data-close-sheet data-i18n="cancel">cancel</button>
+          <button type="button" class="sale-reserve-cancel" data-close-sheet data-i18n="cancel">close</button>
           <button type="button" class="sale-reserve-submit" id="sale-pay" data-i18n="pay">pay</button>
         </div>
       </div>
