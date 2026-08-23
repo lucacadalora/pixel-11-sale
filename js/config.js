@@ -1,7 +1,7 @@
 window.PIXEL_CONFIG = {
-  whatsappDisplay: "+62 812-0000-0011",
-  whatsappE164: "6281200000011",
-  email: "pixel11@merchant.id",
+  xHandle: "lucaxyzz",
+  xUrl: "https://x.com/lucaxyzz",
+  linkedinUrl: "https://www.linkedin.com/in/lucacadalora",
   cityDefault: "Jakarta",
   googleStoreUrl: "https://store.google.com/sg/product/pixel_11",
   fxSgdIdr: 13936,
