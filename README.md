@@ -1,2 +1,3 @@
-# pixel-11-sale
-Pixel 11 Indonesia resale — Luca Cada Lora
+Live site: https://lucacadalora.github.io/pixel-11-sale/
+
+Luca Cada Lora Pixel 11 sale.

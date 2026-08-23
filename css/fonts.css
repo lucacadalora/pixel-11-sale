@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "nbintl";
+  src: local("Geist"), local("Schibsted Grotesk");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "nbintl-mono";
+  src: local("Geist Mono"), local("IBM Plex Mono");
+  font-style: normal;
+  font-weight: 400;
+}
