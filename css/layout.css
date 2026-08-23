@@ -18,7 +18,13 @@ footer.page-footer{
   padding-left:var(--page-pad);
   padding-right:var(--page-pad);
 }
-.page-top-nav{padding-top:1.15rem;padding-bottom:0}
+.page-top-nav{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  padding-top:1.15rem;
+  padding-bottom:0;
+}
 header.home-profile{
   padding-top:.85rem;
   padding-bottom:.8rem;
