@@ -42,30 +42,59 @@ footer.page-footer>div{flex:1 1}
 .lang-switcher a.current{opacity:1}
 .sale-reserve-layer[hidden],.sale-reserve-bar[hidden],.sale-reserve-confirm[hidden]{display:none !important}
 .sale-reserve-layer:not([hidden]){display:flex}
-.sale-reserve-bar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:.9em 10vw;background:#111;color:#fff;z-index:30}
-.sale-reserve-bar-total{margin-left:.75em;opacity:.7}
-.sale-reserve-layer{position:fixed;inset:0;align-items:flex-end;z-index:50}
+.sale-reserve-bar{
+  position:fixed;
+  top:1.05rem;
+  right:max(1.1rem,env(safe-area-inset-right));
+  left:auto;
+  bottom:auto;
+  display:flex;
+  align-items:center;
+  gap:.85em;
+  padding:.5em .7em .5em .95em;
+  background:#111;
+  color:#fff;
+  z-index:30;
+  border-radius:999px;
+}
+.sale-reserve-bar-total{margin-left:.15em;opacity:.7}
+.sale-reserve-layer{
+  position:fixed;
+  inset:0;
+  align-items:stretch;
+  justify-content:flex-end;
+  z-index:50;
+}
 .sale-reserve-backdrop{position:absolute;inset:0;background:#11111147;border:0}
-.sale-reserve-sheet{position:relative;background:#fff;width:100%;max-height:88vh;overflow:auto;padding:3.5rem 10vw 2.5rem;transform:translateY(0);transition:transform .28s ease}
+.sale-reserve-sheet{
+  position:relative;
+  background:#fff;
+  width:min(26.5rem,100vw);
+  height:100%;
+  max-height:100vh;
+  overflow:auto;
+  padding:1.35rem 1.4rem 1.6rem;
+  box-shadow:-16px 0 40px #00000018;
+}
 .sale-reserve-sheet-head{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 1.2em}
 .sale-reserve-sheet-head h2{font-size:1.5em;font-weight:500;margin:0}
-.sale-reserve-form{display:grid;gap:1.1rem;width:min(42rem,100%);margin:0 auto}
+.sale-reserve-form{display:grid;gap:1.1rem;width:100%;margin:0}
 .sale-reserve-form input,.sale-reserve-form textarea{border:0;border-bottom:1px solid #1113;font:inherit;width:100%;padding:.45em 0}
-.sale-reserve-items{list-style:none;width:min(42rem,100%);margin:0 auto 1.4em;padding:0}
+.sale-reserve-items{list-style:none;width:100%;margin:0 0 1.4em;padding:0}
 .sale-reserve-items li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:.65em;align-items:baseline;padding:.75em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent)}
 .sale-reserve-item-title{display:flex;flex-direction:column;gap:.2em}
 .sale-reserve-item-meta{opacity:.45}
 .sale-reserve-total{font-weight:500}
 .sale-reserve-remove{appearance:none;background:none;border:0;color:inherit;cursor:pointer;font:inherit;opacity:.4}
 .sale-reserve-error{margin:0;opacity:.7}
-.sale-reserve-actions{display:flex;justify-content:space-between;align-items:center;gap:1em}
+.sale-reserve-actions{display:flex;justify-content:space-between;align-items:center;gap:1em;margin-top:1.2em}
 .sale-reserve-submit{background:#111;color:#fff;padding:.7em 1.5em}
 .sale-reserve-submit:disabled{opacity:.45}
-.sale-reserve-target{position:fixed;right:12vw;bottom:1.1em;width:1px;height:1px;pointer-events:none}
+.sale-reserve-target{position:fixed;right:2.2rem;top:1.35rem;width:1px;height:1px;pointer-events:none}
 .sale-add-flight{position:fixed;z-index:40;pointer-events:none;overflow:hidden}
 .sale-add-flight img{display:block;width:100%;height:100%;object-fit:contain}
 body.sheet-open{overflow:hidden}
-.sale.has-reserve-bar{padding-bottom:5em}
+.sale.has-reserve-bar{padding-bottom:0}
 .home-profile{display:flex;align-items:center;gap:1.6rem;max-width:1510px;padding:1.2rem 10vw .8rem}
 .home-photo{width:min(9.5rem,28vw);height:min(9.5rem,28vw);object-fit:cover;border-radius:50%;object-position:50% 18%}
 .home-name{font-size:clamp(28px,4.2vw,64px);line-height:1.15;margin:0 0 .25em}
