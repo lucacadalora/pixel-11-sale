@@ -1,118 +1,81 @@
 (function () {
-  const STEPS = {
-    en: [
-      {
-        n: "01",
-        title: "pick the type you want",
-        body: "model, color, storage. start on the sale page, then tell me the exact unit."
-      },
-      {
-        n: "02",
-        title: "contact me",
-        body: "whatsapp is fastest. i confirm it against the next singapore trip."
-      },
-      {
-        n: "03",
-        title: "deal and pay",
-        body: "rekening goes on whatsapp after you reserve. never on this page.",
-        fork: [
-          {
-            label: "direct",
-            text: "transfer to me. usd / eur wire, usdt usdc usdg, or idr."
-          },
-          {
-            label: "tokopedia",
-            text: "if you don't trust a direct transfer: we talk first, then i list it. +10% because i float the buy with my own money, plus tokopedia fees."
-          }
-        ]
-      },
-      {
-        n: "04",
-        title: "i go to singapore",
-        body: "i work from singapore about twice a month. max 2 devices per visit."
-      },
-      {
-        n: "05",
-        title: "customs is in the price",
-        body: "the ask already includes tax paid at customs, about 21% of the total."
-      },
-      {
-        n: "06",
-        title: "you receive it",
-        fork: [
-          {
-            label: "jakarta",
-            text: "cod in the jakarta area."
-          },
-          {
-            label: "elsewhere",
-            text: "jne or any logistics, plus an insurance fee."
-          }
-        ]
-      }
-    ],
-    id: [
-      {
-        n: "01",
-        title: "pilih tipe yang kamu mau",
-        body: "model, warna, penyimpanan. mulai di halaman sale, lalu kabari unit yang persis."
-      },
-      {
-        n: "02",
-        title: "hubungi saya",
-        body: "whatsapp paling cepat. saya cocokkan dengan trip singapura berikutnya."
-      },
-      {
-        n: "03",
-        title: "deal dan bayar",
-        body: "rekening dikirim di whatsapp setelah reservasi. tidak pernah di halaman ini.",
-        fork: [
-          {
-            label: "langsung",
-            text: "transfer ke saya. usd / eur wire, usdt usdc usdg, atau idr."
-          },
-          {
-            label: "tokopedia",
-            text: "kalau belum percaya transfer langsung: chat dulu, baru saya listing. +10% karena saya belanja dulu pakai uang sendiri, plus biaya tokopedia."
-          }
-        ]
-      },
-      {
-        n: "04",
-        title: "saya ke singapura",
-        body: "kerja dari singapura sekitar dua kali sebulan. maks 2 device per kunjungan."
-      },
-      {
-        n: "05",
-        title: "bea cukai sudah masuk harga",
-        body: "harga sudah termasuk pajak ke bea cukai, sekitar 21% dari total."
-      },
-      {
-        n: "06",
-        title: "kamu terima",
-        fork: [
-          {
-            label: "jakarta",
-            text: "cod area jakarta."
-          },
-          {
-            label: "luar kota",
-            text: "jne atau ekspedisi lain, plus biaya asuransi."
-          }
-        ]
-      }
-    ]
+  const COPY = {
+    en: {
+      pick: { title: "pick the type you want", hint: "model, color, storage" },
+      chat: { title: "contact me on whatsapp" },
+      payQ: "direct deal or tokopedia?",
+      direct: { edge: "direct", title: "deal and pay me", hint: "rekening on whatsapp after reserve" },
+      tokped: { edge: "tokopedia", title: "we talk first, then i list it", hint: "+10% plus tokopedia fees" },
+      fly: { title: "i go to singapore", hint: "about twice a month · max 2 devices" },
+      tax: { title: "price includes customs", hint: "about 21% of the total" },
+      recvQ: "jakarta or shipment?",
+      jkt: { edge: "jakarta", title: "COD in jakarta area" },
+      ship: { edge: "elsewhere", title: "JNE or other courier", hint: "plus insurance" }
+    },
+    id: {
+      pick: { title: "pilih tipe yang kamu mau", hint: "model, warna, penyimpanan" },
+      chat: { title: "hubungi saya di whatsapp" },
+      payQ: "deal langsung atau tokopedia?",
+      direct: { edge: "langsung", title: "deal dan bayar ke saya", hint: "rekening di whatsapp setelah reservasi" },
+      tokped: { edge: "tokopedia", title: "kita ngobrol dulu, baru saya listing", hint: "+10% plus biaya tokopedia" },
+      fly: { title: "saya ke singapura", hint: "sekitar 2 kali sebulan · maks 2 device" },
+      tax: { title: "harga sudah termasuk bea cukai", hint: "sekitar 21% dari total" },
+      recvQ: "jakarta atau kirim?",
+      jkt: { edge: "jakarta", title: "COD area jakarta" },
+      ship: { edge: "luar kota", title: "JNE atau ekspedisi lain", hint: "plus asuransi" }
+    }
   };
 
-  function locale() {
-    return localStorage.getItem("pixel11-locale") === "id" ? "id" : "en";
-  }
-
   function esc(s) {
-    return String(s)
+    return String(s || "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
+  }
+
+  function node(item) {
+    const hint = item.hint
+      ? '<span class="flow-hint">' + esc(item.hint) + "</span>"
+      : "";
+    return '<div class="flow-node"><span class="flow-title">' + esc(item.title) + "</span>" + hint + "</div>";
+  }
+
+  function rail() {
+    return '<div class="flow-rail" aria-hidden="true"></div>';
+  }
+
+  function arm(item) {
+    const hint = item.hint
+      ? '<span class="flow-hint">' + esc(item.hint) + "</span>"
+      : "";
+    return (
+      '<div class="flow-arm">' +
+      '<span class="flow-edge">' +
+      esc(item.edge) +
+      "</span>" +
+      '<div class="flow-node"><span class="flow-title">' +
+      esc(item.title) +
+      "</span>" +
+      hint +
+      "</div></div>"
+    );
+  }
+
+  function split(q, a, b) {
+    return (
+      '<div class="flow-split">' +
+      '<p class="flow-q">' +
+      esc(q) +
+      "</p>" +
+      '<div class="flow-arms">' +
+      arm(a) +
+      arm(b) +
+      "</div></div>"
+    );
+  }
+
+  function locale() {
+    return localStorage.getItem("pixel11-locale") === "id" ? "id" : "en";
   }
 
   function render(loc) {
@@ -120,50 +83,25 @@
     const notes = document.getElementById("faq-notes");
     if (notes) notes.innerHTML = "";
     if (!host) return;
-    const lang = loc === "id" ? "id" : "en";
-    host.innerHTML = STEPS[lang]
-      .map((step) => {
-        const fork = (step.fork || [])
-          .map(
-            (p) =>
-              '<p class="faq-path"><span class="faq-path-label">' +
-              esc(p.label) +
-              "</span> " +
-              esc(p.text) +
-              "</p>"
-          )
-          .join("");
-        const body = step.body
-          ? '<p class="faq-body">' + esc(step.body) + "</p>"
-          : "";
-        return (
-          '<li class="faq-step">' +
-          '<span class="faq-n">' +
-          esc(step.n) +
-          "</span>" +
-          "<div>" +
-          '<p class="faq-title">' +
-          esc(step.title) +
-          "</p>" +
-          body +
-          (fork ? '<div class="faq-fork">' + fork + "</div>" : "") +
-          "</div>" +
-          "</li>"
-        );
-      })
-      .join("");
+    const t = COPY[loc === "id" ? "id" : "en"];
+    host.className = "flow";
+    host.innerHTML =
+      node(t.pick) +
+      rail() +
+      node(t.chat) +
+      rail() +
+      split(t.payQ, t.direct, t.tokped) +
+      rail() +
+      node(t.fly) +
+      rail() +
+      node(t.tax) +
+      rail() +
+      split(t.recvQ, t.jkt, t.ship);
   }
 
   window.PIXEL_FAQ = { render: render };
 
   function boot() {
-    const host = document.getElementById("faq-flow");
-    if (host && host.tagName !== "OL") {
-      const ol = document.createElement("ol");
-      ol.id = "faq-flow";
-      ol.className = "faq-flow";
-      host.replaceWith(ol);
-    }
     render(locale());
   }
 

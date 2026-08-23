@@ -18,14 +18,23 @@ footer.page-footer{
   padding-left:var(--page-pad);
   padding-right:var(--page-pad);
 }
+.page-top-nav{padding-top:1.15rem;padding-bottom:0}
 header.home-profile{
-  padding-top:1.2rem;
+  padding-top:.85rem;
   padding-bottom:.8rem;
 }
-.page-top-nav{padding-top:2.5vw}
+.sale-header,
+.journal-header,
+.home-header{
+  height:auto;
+  min-height:0;
+  padding-top:.55rem;
+  padding-bottom:1.15rem;
+}
 @media (max-width:760px){
-  .page-top-nav{padding-top:5vw}
-  header.home-profile{padding-top:1.2rem;padding-bottom:.8rem}
+  .page-top-nav{padding-top:1rem}
+  header.home-profile{padding-top:.8rem;padding-bottom:.7rem}
+  .sale-header,.journal-header,.home-header{padding-top:.4rem;padding-bottom:.9rem}
 }
 .sale-reserve-bar,
 .sale-reserve-sheet{
@@ -33,44 +42,68 @@ header.home-profile{
   padding-right:var(--page-pad);
 }
 
-.faq-flow{
-  list-style:none;
-  margin:1.7em 0 0;
-  padding:0;
-  max-width:40em;
+.flow{margin:1.5em 0 0;max-width:42em}
+.flow-node{
+  display:inline-block;
+  max-width:100%;
+  border:1px solid currentColor;
+  box-sizing:border-box;
+  padding:.5em .75em;
 }
-.faq-step{
-  display:grid;
-  grid-template-columns:2.4em minmax(0,1fr);
-  column-gap:.85em;
-  margin:0 0 1.55em;
-}
-.faq-n{
-  letter-spacing:.08em;
-  opacity:.35;
-}
-.faq-title{
+.flow-title{
+  display:block;
   font-family:var(--header-font-family);
-  font-size:1.15em;
   font-weight:500;
   letter-spacing:-.01em;
-  line-height:1.25em;
-  margin:0;
+  line-height:1.25;
 }
-.faq-body{
+.flow-hint{
+  display:block;
+  margin-top:.28em;
   letter-spacing:.02em;
-  margin:.35em 0 0;
-  opacity:.7;
+  opacity:.5;
 }
-.faq-fork{margin:.7em 0 0}
-.faq-path{
-  letter-spacing:.02em;
-  margin:0 0 .55em;
-  opacity:.75;
+.flow-rail{
+  width:1px;
+  height:1.15em;
+  margin-left:1.15em;
+  background:currentColor;
+  opacity:.28;
 }
-.faq-path:last-child{margin-bottom:0}
-.faq-path-label{
+.flow-q{
+  margin:0 0 .65em;
+  letter-spacing:.04em;
+  opacity:.42;
+}
+.flow-split{max-width:100%}
+.flow-arms{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:.85rem 1.1rem;
+  position:relative;
+  padding-top:.7em;
+}
+.flow-arms:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:1.15em;
+  right:25%;
+  height:1px;
+  background:currentColor;
+  opacity:.28;
+}
+.flow-arm{min-width:0}
+.flow-arm .flow-node{display:block}
+.flow-edge{
+  display:block;
+  margin-bottom:.4em;
   letter-spacing:.06em;
-  opacity:.45;
+  opacity:.42;
+}
+@media (max-width:560px){
+  .flow-arms{grid-template-columns:1fr}
+  .flow-arms:before{right:auto;width:1px;height:100%;left:1.15em}
 }
 .faq-notes{display:none}
+.faq-flow{margin:0;padding:0}
