@@ -1,12 +1,21 @@
-/* Single place to edit merchant contact + pricing knobs.
-   catalog.json stores the computed prices; markup here is used
-   only for the WhatsApp note / README, not recomputed live. */
 window.PIXEL_CONFIG = {
   whatsappDisplay: "+62 812-0000-0011",
   whatsappE164: "6281200000011",
   email: "pixel11@merchant.id",
-  fxSgdIdr: 13936,
-  markup: 1.06,
   cityDefault: "Jakarta",
-  changiUrl: "https://www.ishopchangi.com/en/brand/google"
+  googleStoreUrl: "https://store.google.com/sg/product/pixel_11",
+  fxSgdIdr: 13936,
+  fxUsdIdr: 17705,
+  fxNote: "SGD Xe mid-market ~21 Aug 2026; USD JISDOR 21 Aug 2026",
+  gst: 0.09,
+  pibUsd: 500,
+  importRate: 0.21,
+  markupIdr: 5000000,
+  askRoundTo: 50000,
+  officialSgd: {
+    "pixel-11": { "256": 1299, "512": 1499 },
+    "pixel-11-pro": { "256": 1599, "512": 1799, "1tb": 1999 },
+    "pixel-11-pro-xl": { "256": 1819, "512": 2019, "1tb": 2219 },
+    "pixel-11-pro-fold": { "256": 2499, "512": 2699, "1tb": 2899 }
+  }
 };
