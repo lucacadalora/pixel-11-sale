@@ -1,7 +1,7 @@
 (function () {
   const CFG = window.PIXEL_CONFIG;
   const STORAGE_KEY = "pixel11-reserve";
-  const CONTACT_KEY = "pixel11-reserve-contact";
+  const MAX_ITEMS = 2;
 
   const I18N = {
     en: {
@@ -16,34 +16,27 @@
       filterPro: "pro",
       filterXl: "pro xl",
       filterFold: "fold",
-      reserve: "reserve",
-      reserved: "reserved",
-      continue: "continue",
-      drawerTitle: "reserve pickup",
-      name: "name",
-      whatsapp: "x / phone",
-      city: "city",
-      note: "note",
-      pickupDate: "pickup date",
-      pickupWindow: "window",
-      anytime: "anytime",
-      morning: "morning",
-      afternoon: "afternoon",
-      evening: "evening",
+      add: "add",
+      inBag: "in bag",
+      bag: "bag",
+      checkout: "checkout",
+      pay: "pay",
+      reserve: "add",
+      reserved: "in bag",
+      continue: "checkout",
+      drawerTitle: "bag",
       cancel: "cancel",
-      submit: "send request",
-      submitting: "sending…",
-      success: "noted – dm me on x or linkedin to confirm.",
-      error: "didn't go through. try again?",
+      success: "paid. i'll ping you on x or linkedin about delivery.",
+      error: "couldn't start checkout. try again?",
       total: "total",
-      itemAdded: "{n} item added",
-      itemsAdded: "{n} items added",
+      itemAdded: "{n} in bag",
+      itemsAdded: "{n} in bag",
       howTitle: "how this works",
       howBody: [
         "ask is built from official google store singapore, not ishopchangi. 256 gb list: pixel 11 s$1,299, pro s$1,599, pro xl s$1,819, fold s$2,499. higher storage is +s$200 a step.",
         "for 1 phone: official minus 9% gst, minus usd 500 pib, then bm 10% and ppn 11% on the rest (ppn sits on value + bm), plus rp 5.000.000 markup. my take is the gst refund plus that markup.",
         "two phones on one trip share the usd 500 exemption — ping me and i'll recompute.",
-        "reserve a color and storage, pick a window, send the request. then dm me on x or linkedin."
+        "add a color and storage (max 2), then pay with card, apple pay, or google pay. i'll ping you on x or linkedin about delivery."
       ],
       contactTitle: "contact",
       contactBody: "dm me on x or linkedin.",
@@ -64,34 +57,27 @@
       filterPro: "pro",
       filterXl: "pro xl",
       filterFold: "fold",
-      reserve: "reserve",
-      reserved: "reserved",
-      continue: "continue",
-      drawerTitle: "reservasi ambil",
-      name: "nama",
-      whatsapp: "x / telepon",
-      city: "kota",
-      note: "catatan",
-      pickupDate: "tanggal ambil",
-      pickupWindow: "jendela",
-      anytime: "kapan saja",
-      morning: "pagi",
-      afternoon: "siang",
-      evening: "malam",
+      add: "add",
+      inBag: "in bag",
+      bag: "bag",
+      checkout: "checkout",
+      pay: "pay",
+      reserve: "add",
+      reserved: "in bag",
+      continue: "checkout",
+      drawerTitle: "bag",
       cancel: "batal",
-      submit: "send request",
-      submitting: "mengirim…",
-      success: "tercatat – dm saya di x atau linkedin.",
-      error: "tidak terkirim. coba lagi?",
+      success: "sudah bayar. saya hubungi di x atau linkedin soal pengiriman.",
+      error: "checkout gagal. coba lagi?",
       total: "total",
-      itemAdded: "{n} item ditambah",
-      itemsAdded: "{n} item ditambah",
+      itemAdded: "{n} in bag",
+      itemsAdded: "{n} in bag",
       howTitle: "cara kerjanya",
       howBody: [
         "ask dari harga resmi google store singapura, bukan ishopchangi. 256 gb: pixel 11 s$1.299, pro s$1.599, pro xl s$1.819, fold s$2.499. storage lebih besar +s$200.",
         "untuk 1 hp: resmi minus gst 9%, minus pib usd 500, lalu bm 10% dan ppn 11% dari sisa (ppn dihitung dari nilai + bm), plus markup rp 5.000.000. untung saya = refund gst + markup itu.",
         "dua hp dalam satu trip berbagi pib usd 500 — chat, saya hitung ulang.",
-        "reservasi warna dan penyimpanan, pilih jendela, kirim. lalu dm saya di x atau linkedin."
+        "masukkan warna dan penyimpanan (maks 2), lalu bayar dengan kartu, apple pay, atau google pay. saya hubungi di x atau linkedin soal pengiriman."
       ],
       contactTitle: "kontak",
       contactBody: "dm saya di x atau linkedin.",
@@ -110,14 +96,14 @@
     storageByCard: {},
     sheetOpen: false,
     success: false,
-    form: loadContact(),
+    paying: false,
     openPrice: null
   };
 
   function loadSelected() {
     try {
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      return Array.isArray(raw) ? raw : [];
+      return Array.isArray(raw) ? raw.slice(0, MAX_ITEMS) : [];
     } catch {
       return [];
     }
@@ -125,34 +111,6 @@
 
   function saveSelected() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.selected));
-  }
-
-  function loadContact() {
-    try {
-      const raw = JSON.parse(localStorage.getItem(CONTACT_KEY) || "{}");
-      return {
-        name: raw.name || "",
-        whatsapp: raw.whatsapp || "",
-        city: raw.city || CFG.cityDefault,
-        note: raw.note || "",
-        date: "2026-08-23",
-        window: "anytime"
-      };
-    } catch {
-      return { name: "", whatsapp: "", city: CFG.cityDefault, note: "", date: "2026-08-23", window: "anytime" };
-    }
-  }
-
-  function saveContact() {
-    localStorage.setItem(
-      CONTACT_KEY,
-      JSON.stringify({
-        name: state.form.name,
-        whatsapp: state.form.whatsapp,
-        city: state.form.city,
-        note: state.form.note
-      })
-    );
   }
 
   function t(key) {
@@ -294,7 +252,7 @@
             <p class="sale-card-storage sale-chip-row">${chips}</p>
             <p class="sale-card-contact">
               <button type="button" class="sale-reserve-btn${picked ? " is-on" : ""}" aria-pressed="${picked}" data-reserve="${card.id}">
-                ${picked ? t("reserved") : t("reserve")}
+                ${picked ? t("inBag") : t("add")}
               </button>
             </p>
           </div>
@@ -328,19 +286,6 @@
     document.getElementById("reserve-total").textContent = formatIdr(selectedTotal());
   }
 
-  function dateChip(iso) {
-    const [y, m, d] = iso.split("-").map(Number);
-    const dt = new Date(Date.UTC(y, m - 1, d, 12));
-    const weekday = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: "UTC" })
-      .format(dt)
-      .toUpperCase();
-    const on = state.form.date === iso ? " is-on" : "";
-    return `<button type="button" class="sale-chip sale-chip--date${on}" data-date="${iso}" aria-label="${weekday.toLowerCase()} ${d}">
-      <span class="sale-chip-weekday">${weekday}</span>
-      <span class="sale-chip-day">${d}</span>
-    </button>`;
-  }
-
   function renderSheet() {
     const layer = document.getElementById("sale-reserve-layer");
     if (!layer) return;
@@ -352,9 +297,9 @@
     list.innerHTML =
       items
         .map(({ v }) => {
-          const title = `${v.model} · ${v.color} · ${v.storage}`;
+          const title = `${v.model} · ${v.color}`;
           return `<li>
-            <span class="sale-reserve-item-title">${title}</span>
+            <span class="sale-reserve-item-title">${title}<span class="sale-reserve-item-meta">${v.storage}</span></span>
             <span class="sale-reserve-item-price">${formatIdr(v.askIdr)}</span>
             <button type="button" class="sale-reserve-remove" data-remove="${v.id}" aria-label="remove">×</button>
           </li>`;
@@ -364,20 +309,13 @@
         <span class="sale-reserve-item-title">${t("total")}</span>
         <span class="sale-reserve-item-price">${formatIdr(selectedTotal())}</span>
       </li>`;
-    document.getElementById("chip-dates").innerHTML = state.catalog.pickup.dates.map(dateChip).join("");
-    const hours = { anytime: "", morning: "09–12", afternoon: "13–17", evening: "18–21" };
-    document.getElementById("chip-windows").innerHTML = state.catalog.pickup.windows
-      .map((w) => {
-        const on = state.form.window === w.id ? " is-on" : "";
-        const h = hours[w.id] ? `<span class="sale-chip--hours">${hours[w.id]}</span>` : "";
-        return `<button type="button" class="sale-chip${on}" data-window="${w.id}">${t(w.id)}${h}</button>`;
-      })
-      .join("");
-    document.getElementById("field-name").value = state.form.name;
-    document.getElementById("field-whatsapp").value = state.form.whatsapp;
-    document.getElementById("field-city").value = state.form.city;
-    document.getElementById("field-note").value = state.form.note;
-    document.getElementById("sale-reserve-error").hidden = true;
+    const err = document.getElementById("sale-reserve-error");
+    if (err && !state.payError) err.hidden = true;
+    const pay = document.getElementById("sale-pay");
+    if (pay) {
+      pay.disabled = state.paying;
+      pay.textContent = state.paying ? t("pay") + "…" : t("pay");
+    }
   }
 
   function toggleReserve(cardId, mediaEl) {
@@ -385,6 +323,11 @@
     if (existing) {
       state.selected = state.selected.filter((s) => s.cardId !== cardId);
     } else {
+      if (state.selected.length >= MAX_ITEMS) {
+        state.sheetOpen = true;
+        renderSheet();
+        return;
+      }
       const storage = state.storageByCard[cardId] || "256";
       const v = variantFor(cardId, storage);
       state.selected.push({ id: v.id, cardId: cardId, storage: storage });
@@ -416,22 +359,41 @@
     setTimeout(() => node.remove(), 750);
   }
 
-  function submitReserve(ev) {
-    ev.preventDefault();
-    if (!state.form.name.trim() || !state.form.whatsapp.trim()) return;
-    saveContact();
-    window.open(CFG.xUrl || "https://x.com/lucaxyzz", "_blank", "noopener");
-    state.sheetOpen = false;
-    state.success = true;
-    state.selected = [];
-    saveSelected();
-    renderGrid();
-    renderBar();
+  async function startCheckout() {
+    const err = document.getElementById("sale-reserve-error");
+    if (!state.selected.length || state.paying) return;
+    state.paying = true;
+    state.payError = false;
+    if (err) err.hidden = true;
     renderSheet();
-    setTimeout(() => {
-      state.success = false;
-      renderBar();
-    }, 4200);
+    try {
+      const res = await fetch(CFG.checkoutPath || "/api/checkout", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          items: state.selected.map((s) => ({ cardId: s.cardId, storage: s.storage }))
+        })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.url) {
+        state.payError = true;
+        if (err) {
+          err.textContent = t("error");
+          err.hidden = false;
+        }
+        return;
+      }
+      location = data.url;
+    } catch {
+      state.payError = true;
+      if (err) {
+        err.textContent = t("error");
+        err.hidden = false;
+      }
+    } finally {
+      state.paying = false;
+      renderSheet();
+    }
   }
 
   function onPriceInfo(e) {
@@ -491,6 +453,11 @@
       toggleReserve(reserve.dataset.reserve, card && card.querySelector(".sale-card-media"));
       return;
     }
+    const pay = e.target.closest("#sale-pay");
+    if (pay) {
+      startCheckout();
+      return;
+    }
     const open = e.target.closest("[data-open-sheet]");
     if (open) {
       state.sheetOpen = true;
@@ -513,18 +480,6 @@
       renderSheet();
       return;
     }
-    const date = e.target.closest("[data-date]");
-    if (date) {
-      state.form.date = date.dataset.date;
-      renderSheet();
-      return;
-    }
-    const win = e.target.closest("[data-window]");
-    if (win) {
-      state.form.window = win.dataset.window;
-      renderSheet();
-      return;
-    }
     const top = e.target.closest(".scroll-to-top");
     if (top) {
       window.scrollTo({
@@ -532,19 +487,6 @@
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
       });
     }
-  }
-
-  function onInput(e) {
-    const map = {
-      "field-name": "name",
-      "field-whatsapp": "whatsapp",
-      "field-city": "city",
-      "field-note": "note"
-    };
-    const key = map[e.target.id];
-    if (!key) return;
-    state.form[key] = e.target.value;
-    saveContact();
   }
 
   function onScroll() {
@@ -578,9 +520,6 @@
     }
     document.addEventListener("click", onPriceInfo, true);
     document.addEventListener("click", onClick);
-    document.addEventListener("input", onInput);
-    const form = document.getElementById("sale-reserve-form");
-    if (form) form.addEventListener("submit", submitReserve);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("hashchange", setNavCurrent);
     window.addEventListener("keydown", (e) => {
