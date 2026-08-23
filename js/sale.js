@@ -308,7 +308,7 @@
         .map(({ v }, i) => {
           const title = `${v.model} · ${v.color}`;
           const ask = cartPrices && cartPrices[i] ? cartPrices[i].askIdr : v.askIdr;
-          return `<li>
+          return `<li data-line="${v.id}">
             <span class="sale-reserve-item-title">${title}<span class="sale-reserve-item-meta">${v.storage}</span></span>
             <span class="sale-reserve-item-price">${formatIdr(ask)}</span>
             <button type="button" class="sale-reserve-remove" data-remove="${v.id}" aria-label="remove">×</button>
@@ -326,6 +326,69 @@
       pay.disabled = state.paying;
       pay.textContent = state.paying ? t("pay") + "…" : t("pay");
     }
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function markCardInBag(cardId, on) {
+    const card = document.querySelector('.sale-card[data-card="' + cardId + '"]');
+    if (!card) return;
+    card.classList.toggle("sale-card--picked", on);
+    const btn = card.querySelector(".sale-reserve-btn");
+    if (!btn) return;
+    btn.classList.toggle("is-on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.textContent = on ? t("inBag") : t("add");
+  }
+
+  function updateTotalRow() {
+    const el = document.querySelector(".sale-reserve-total .sale-reserve-item-price");
+    if (el) el.textContent = formatIdr(selectedTotal());
+  }
+
+  function closeSheet(animate) {
+    const layer = document.getElementById("sale-reserve-layer");
+    if (animate && layer && !prefersReducedMotion()) {
+      layer.classList.add("is-closing");
+      setTimeout(function () {
+        layer.classList.remove("is-closing");
+        state.sheetOpen = false;
+        renderSheet();
+      }, 240);
+      return;
+    }
+    if (layer) layer.classList.remove("is-closing");
+    state.sheetOpen = false;
+    renderSheet();
+  }
+
+  function removeFromBag(id, row) {
+    const sel = state.selected.find((s) => s.id === id);
+    if (!sel) return;
+    const finish = function (animateClose) {
+      state.selected = state.selected.filter((s) => s.id !== id);
+      saveSelected();
+      markCardInBag(sel.cardId, false);
+      renderBar();
+      if (!state.selected.length) {
+        closeSheet(animateClose);
+      } else if (row) {
+        row.remove();
+        updateTotalRow();
+      } else {
+        renderSheet();
+      }
+    };
+    if (prefersReducedMotion() || !row) {
+      finish(false);
+      return;
+    }
+    row.classList.add("is-out");
+    setTimeout(function () {
+      finish(true);
+    }, 280);
   }
 
   function toggleReserve(cardId, mediaEl) {
@@ -479,18 +542,13 @@
     }
     const close = e.target.closest("[data-close-sheet]");
     if (close) {
-      state.sheetOpen = false;
-      renderSheet();
+      closeSheet(true);
       return;
     }
     const remove = e.target.closest("[data-remove]");
     if (remove) {
-      state.selected = state.selected.filter((s) => s.id !== remove.dataset.remove);
-      saveSelected();
-      if (!state.selected.length) state.sheetOpen = false;
-      renderGrid();
-      renderBar();
-      renderSheet();
+      e.preventDefault();
+      removeFromBag(remove.dataset.remove, remove.closest("li"));
       return;
     }
     const top = e.target.closest(".scroll-to-top");
@@ -542,8 +600,7 @@
           syncPricePop(false);
         }
         if (state.sheetOpen) {
-          state.sheetOpen = false;
-          renderSheet();
+          closeSheet(true);
         }
       }
     });
