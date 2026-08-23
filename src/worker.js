@@ -38,9 +38,7 @@ function json(data, status) {
 }
 
 function normStorage(raw) {
-  const s = String(raw || "")
-    .toLowerCase()
-    .replace(/\s+/g, "");
+  const s = String(raw || "").toLowerCase().replace(/\s+/g, "");
   if (s === "256") return "256";
   if (s === "512") return "512";
   if (s === "1tb" || s === "1024" || s === "1t") return "1tb";
@@ -51,23 +49,24 @@ function roundAsk(n) {
   return Math.round(n / ROUND) * ROUND;
 }
 
-function askIdr(modelId, storage) {
+function askIdr(modelId, storage, skipPib) {
   const sgdAmt = ((OFFICIAL_SGD[modelId] || {})[storage] || 0);
   if (!sgdAmt) return 0;
   const exGstSgd = sgdAmt / (1 + GST);
   const exGstIdr = exGstSgd * FX_SGD_IDR;
-  const taxable = Math.max(0, exGstIdr - PIB_USD * FX_USD_IDR);
+  const pib = skipPib ? 0 : PIB_USD * FX_USD_IDR;
+  const taxable = Math.max(0, exGstIdr - pib);
   const bm = taxable * BM;
   const ppn = (taxable + bm) * PPN;
   return roundAsk(exGstIdr + bm + ppn + MARKUP);
 }
 
-function resolveItem(item) {
+function resolveItem(item, skipPib) {
   if (!item || typeof item !== "object") return null;
   const card = CARDS[item.cardId];
   const storage = normStorage(item.storage);
   if (!card || !storage || card.storages.indexOf(storage) === -1) return null;
-  const amount = askIdr(card.modelId, storage);
+  const amount = askIdr(card.modelId, storage, skipPib);
   if (!amount) return null;
   return {
     cardId: item.cardId,
@@ -85,7 +84,7 @@ function formBody(pairs) {
 }
 
 async function checkout(request, env) {
-  if (!env.STRIPE_SECRET_KEY) return json({ error: "checkout unavailable" }, 503);
+  if (!env.STRIPE_SECRET_KEY) return json({ error: "stripe isn't connected yet", code: "no_stripe" }, 503);
   let body;
   try {
     body = await request.json();
@@ -96,7 +95,7 @@ async function checkout(request, env) {
   if (!raw || !raw.length || raw.length > 2) return json({ error: "bad items" }, 400);
   const lines = [];
   for (let i = 0; i < raw.length; i++) {
-    const line = resolveItem(raw[i]);
+    const line = resolveItem(raw[i], i > 0);
     if (!line) return json({ error: "bad items" }, 400);
     lines.push(line);
   }
@@ -106,7 +105,7 @@ async function checkout(request, env) {
     ["currency", "idr"],
     ["automatic_payment_methods[enabled]", "true"],
     ["success_url", origin + "/success.html?session_id={CHECKOUT_SESSION_ID}"],
-    ["cancel_url", origin + "/sale.html"],
+    ["cancel_url", origin + "/sale"],
     ["shipping_address_collection[allowed_countries][]", "ID"],
     ["phone_number_collection[enabled]", "true"]
   ];
