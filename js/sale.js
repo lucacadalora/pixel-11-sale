@@ -10,8 +10,7 @@
       sale: "sale",
       shop: "shop",
       title: "Pixel 11",
-      intro:
-        "sealed pixel 11 from singapore. sticker is official google store sgd (full, with gst). tap i next to the ask to see gst refund, usd 500 pib, 21% import, and rp 5.000.000 markup. jakarta pickup or courier.",
+      intro: "sealed pixel 11 from singapore. official google store sgd. tap i next to the ask if you want the math. jakarta pickup or courier.",
       filterAll: "all",
       filter11: "pixel 11",
       filterPro: "pro",
@@ -57,8 +56,7 @@
       sale: "sale",
       shop: "shop",
       title: "Pixel 11",
-      intro:
-        "pixel 11 sealed dari singapura. harga coret = ritel resmi google store sg. ketuk i di samping ask untuk lihat refund gst, pib usd 500, bea 21%, dan markup rp 5.000.000. ambil jakarta atau kurir.",
+      intro: "pixel 11 sealed dari singapura. harga resmi google store sg. ketuk i di samping ask kalau mau lihat hitungannya. ambil jakarta atau kurir.",
       filterAll: "semua",
       filter11: "pixel 11",
       filterPro: "pro",
@@ -227,16 +225,17 @@
         const v = variantFor(card.id, storage);
         const picked = isPicked(card.id);
         const open = state.openPrice === card.id;
-        const lines = window.PIXEL_PRICE
-          ? window.PIXEL_PRICE.breakdownLines(v, state.locale)
-          : [];
         const chips = card.storages
           .map((st) => {
             const on = st === storage ? " is-on" : "";
             return `<button type="button" class="sale-chip${on}" data-storage="${st}" data-card="${card.id}">${st}</button>`;
           })
           .join("");
-        const pop = lines.map((line) => "<p>" + line + "</p>").join("");
+        let pop = "";
+        if (open && window.PIXEL_PRICE) {
+          const lines = window.PIXEL_PRICE.breakdownLines(v, state.locale);
+          pop = '<div class="price-pop">' + lines.map((line) => "<p>" + line + "</p>").join("") + "</div>";
+        }
         return `<li class="sale-card${picked ? " sale-card--picked" : ""}" data-card="${card.id}">
           <div class="sale-card-media">
             <img src="${card.photo}" alt="" loading="lazy" width="1200" height="900">
@@ -244,15 +243,15 @@
           <div class="sale-card-body">
             <p class="sale-card-category">${card.category}</p>
             <h2 class="sale-card-title">${card.title}</h2>
-            <p class="sale-card-price">
+            <div class="sale-card-price">
               <span class="sale-price-row">
                 <span class="sale-price-estimate">${formatIdr(v.estimateIdr)}</span>
                 <span class="sale-price-ask">${formatIdr(v.askIdr)}</span>
                 <button type="button" class="price-info" data-price-info="${card.id}" aria-expanded="${open}" aria-label="${t("priceInfo")}">i</button>
               </span>
               <span class="sale-price-note">official S$${v.officialSgd}</span>
-              <span class="price-pop" ${open ? "" : "hidden"}>${pop}</span>
-            </p>
+              ${pop}
+            </div>
             <p class="sale-card-storage sale-chip-row">${chips}</p>
             <p class="sale-card-contact">
               <button type="button" class="sale-reserve-btn${picked ? " is-on" : ""}" aria-pressed="${picked}" data-reserve="${card.id}">
@@ -428,6 +427,8 @@
     }
     const info = e.target.closest("[data-price-info]");
     if (info) {
+      e.preventDefault();
+      e.stopPropagation();
       const id = info.getAttribute("data-price-info");
       state.openPrice = state.openPrice === id ? null : id;
       renderGrid();
