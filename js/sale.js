@@ -28,6 +28,7 @@
       cancel: "close",
       success: "paid. i'll ping you on x or linkedin about delivery.",
       error: "couldn't start checkout. try again?",
+      paySoon: "pay isn't live yet. stripe key still missing.",
       total: "total",
       itemAdded: "{n} in bag",
       itemsAdded: "{n} in bag",
@@ -69,6 +70,7 @@
       cancel: "tutup",
       success: "sudah bayar. saya hubungi di x atau linkedin soal pengiriman.",
       error: "checkout gagal. coba lagi?",
+      paySoon: "pay belum hidup. kunci stripe belum dipasang.",
       total: "total",
       itemAdded: "{n} in bag",
       itemsAdded: "{n} in bag",
@@ -131,6 +133,7 @@
       : { askIdr: raw.askIdr, officialSgd: raw.changiSgd, officialIdr: raw.estimateIdr };
     return Object.assign({}, raw, priced, {
       id: raw.id || cardId + "-" + st,
+      modelId: card.modelId,
       model: raw.model || card.category || "",
       color: raw.color || card.title || "",
       storage: raw.storage || storage,
@@ -151,7 +154,15 @@
   }
 
   function selectedTotal() {
-    return selectedEntries().reduce((sum, { v }) => sum + v.askIdr, 0);
+    const entries = selectedEntries();
+    if (window.PIXEL_PRICE && window.PIXEL_PRICE.computeCart) {
+      return window.PIXEL_PRICE.computeCart(
+        entries.map(function (e) {
+          return { modelId: e.v.modelId, storage: e.sel.storage };
+        })
+      ).reduce(function (sum, p) { return sum + p.askIdr; }, 0);
+    }
+    return entries.reduce(function (sum, e) { return sum + e.v.askIdr; }, 0);
   }
 
   function isPicked(cardId) {
@@ -264,15 +275,10 @@
 
   function renderBar() {
     const bag = document.getElementById("nav-bag");
-    const count = document.getElementById("nav-bag-count");
     const n = state.selected.length;
     if (bag) {
       bag.classList.toggle("has-items", n > 0);
-      bag.setAttribute("aria-expanded", state.sheetOpen ? "true" : "false");
-    }
-    if (count) {
-      count.hidden = n === 0;
-      count.textContent = n ? String(n) : "";
+      bag.textContent = n ? t("bag") + " " + n : t("bag");
     }
     const bar = document.getElementById("sale-reserve-bar");
     const confirm = document.getElementById("sale-reserve-confirm");
@@ -288,14 +294,23 @@
     renderBar();
     if (layer.hidden) return;
     const items = selectedEntries();
+    const cartPrices =
+      window.PIXEL_PRICE && window.PIXEL_PRICE.computeCart
+        ? window.PIXEL_PRICE.computeCart(
+            items.map(function (e) {
+              return { modelId: e.v.modelId, storage: e.sel.storage };
+            })
+          )
+        : null;
     const list = document.getElementById("sale-reserve-items");
     list.innerHTML =
       items
-        .map(({ v }) => {
+        .map(({ v }, i) => {
           const title = `${v.model} · ${v.color}`;
+          const ask = cartPrices && cartPrices[i] ? cartPrices[i].askIdr : v.askIdr;
           return `<li>
             <span class="sale-reserve-item-title">${title}<span class="sale-reserve-item-meta">${v.storage}</span></span>
-            <span class="sale-reserve-item-price">${formatIdr(v.askIdr)}</span>
+            <span class="sale-reserve-item-price">${formatIdr(ask)}</span>
             <button type="button" class="sale-reserve-remove" data-remove="${v.id}" aria-label="remove">×</button>
           </li>`;
         })
@@ -375,7 +390,7 @@
       if (!res.ok || !data.url) {
         state.payError = true;
         if (err) {
-          err.textContent = t("error");
+          err.textContent = res.status === 503 || data.code === "no_stripe" ? t("paySoon") : t("error");
           err.hidden = false;
         }
         return;
