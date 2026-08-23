@@ -32,3 +32,9 @@ header.home-profile{
   padding-left:var(--page-pad);
   padding-right:var(--page-pad);
 }
+
+.faq-flow{margin:1.2em 0 0;overflow-x:auto}
+.faq-flow svg{max-width:100%;height:auto}
+.faq-notes{margin:1.6em 0 0;max-width:40em}
+.faq-notes dt{margin:1.05em 0 .3em;letter-spacing:.04em;opacity:.45}
+.faq-notes dd{margin:0;letter-spacing:.02em;opacity:.85}

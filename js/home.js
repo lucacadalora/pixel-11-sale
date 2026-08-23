@@ -28,6 +28,8 @@
       payOnchain: "onchain",
       payLocal: "local",
       payIdr: "IDR transfer to my personal bank account",
+      faqTitle: "how this works",
+      faqLead: "pick a type, ping me, we deal. then i fly to singapore. the chart is the faq.",
       intro: [
         "tech entrepreneur. i start and ship companies from indonesia, then get out of the way.",
         "i build AI products (jatevo, vantis) and i also move sealed phones from singapore to jakarta. same person on linkedin, same person you transfer to."
@@ -60,6 +62,8 @@
       payOnchain: "onchain",
       payLocal: "lokal",
       payIdr: "transfer IDR ke rekening pribadi saya",
+      faqTitle: "cara kerjanya",
+      faqLead: "pilih tipe, chat saya, kita deal. lalu saya terbang ke singapura. bagan ini faq-nya.",
       intro: [
         "entrepreneur teknologi. saya mulai dan kirim perusahaan dari indonesia.",
         "saya bangun produk AI (jatevo, vantis) dan juga bawa HP sealed dari singapura ke jakarta. orang yang sama di linkedin, orang yang sama yang menerima transfer."
@@ -77,6 +81,7 @@
     });
     const intro = document.getElementById("home-intro");
     if (intro) intro.innerHTML = L.intro.map((p) => "<p>" + p + "</p>").join("");
+    if (window.PIXEL_FAQ) window.PIXEL_FAQ.render(state.locale);
     document.querySelectorAll(".lang-switcher a").forEach((a) => {
       a.classList.toggle("current", a.dataset.locale === state.locale);
     });
