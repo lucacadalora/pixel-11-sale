@@ -109,6 +109,24 @@ header.home-profile{
 .faq-flow{margin:0;padding:0}
 
 .sale-card-price{position:relative}
+.sale-price-line{
+  display:grid;
+  grid-template-columns:5.4em minmax(0,1fr) auto;
+  align-items:baseline;
+  column-gap:.7em;
+  margin:0 0 .45em;
+}
+.sale-price-k{
+  letter-spacing:.04em;
+  opacity:.42;
+}
+.sale-price-estimate{
+  text-decoration:none !important;
+  opacity:.62;
+}
+.sale-price-line--ask{
+  margin-bottom:.2em;
+}
 .price-info{
   appearance:none;
   background:none;
@@ -121,7 +139,7 @@ header.home-profile{
   height:1.35em;
   letter-spacing:0;
   line-height:1.2;
-  margin:0 0 0 .35em;
+  margin:0;
   opacity:.45;
   padding:0;
   vertical-align:middle;
@@ -131,13 +149,26 @@ header.home-profile{
 .price-info[aria-expanded="true"]{opacity:1}
 .price-pop{
   display:none;
-  letter-spacing:.03em;
-  margin:.55em 0 0;
-  max-width:28em;
-  opacity:.7;
+  list-style:none;
+  margin:1.15em 0 0;
+  max-width:22em;
+  padding:0;
 }
 .sale-card-price:has(.price-info[aria-expanded="true"]) .price-pop{
   display:block;
 }
-.price-pop p{margin:0 0 .28em}
-.price-pop p:last-child{margin-bottom:0}
+.price-pop li{
+  display:grid;
+  grid-template-columns:1.4em minmax(0,1fr) auto;
+  align-items:baseline;
+  column-gap:.85em;
+  padding:.7em 0;
+  border-top:1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+.price-pop li:first-child{
+  border-top:0;
+  padding-top:.15em;
+}
+.price-n{opacity:.38}
+.price-name{opacity:.68;padding-right:.5em}
+.price-cost{text-align:right;white-space:nowrap}
