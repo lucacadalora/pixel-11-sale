@@ -107,3 +107,33 @@ header.home-profile{
 }
 .faq-notes{display:none}
 .faq-flow{margin:0;padding:0}
+
+.sale-card-price{position:relative}
+.price-info{
+  appearance:none;
+  background:none;
+  border:1px solid currentColor;
+  border-radius:50%;
+  color:inherit;
+  cursor:pointer;
+  font:inherit;
+  font-size:.72em;
+  height:1.35em;
+  letter-spacing:0;
+  line-height:1.2;
+  margin:0 0 0 .35em;
+  opacity:.45;
+  padding:0;
+  vertical-align:middle;
+  width:1.35em;
+}
+.price-info:hover,
+.price-info[aria-expanded="true"]{opacity:1}
+.price-pop{
+  letter-spacing:.03em;
+  margin:.55em 0 0;
+  max-width:28em;
+  opacity:.7;
+}
+.price-pop p{margin:0 0 .28em}
+.price-pop p:last-child{margin-bottom:0}
