@@ -2,26 +2,26 @@
   const COPY = {
     en: {
       pick: { title: "pick the type you want", hint: "model, color, storage" },
-      chat: { title: "dm me on x or linkedin" },
-      payQ: "direct deal or tokopedia?",
-      direct: { edge: "direct", title: "deal and pay me", hint: "rekening on x or linkedin after reserve" },
+      chat: { title: "add to bag, then pay", hint: "card, apple pay, google pay" },
+      payQ: "this site or tokopedia?",
+      direct: { edge: "direct", title: "checkout here", hint: "stripe · i ping you on x or linkedin" },
       tokped: { edge: "tokopedia", title: "we talk first, then i list it", hint: "+10% plus tokopedia fees" },
       fly: { title: "i go to singapore", hint: "about twice a month · max 2 devices" },
       tax: { title: "price includes customs", hint: "bm 10% then ppn 11%" },
       recvQ: "jakarta or shipment?",
-      jkt: { edge: "jakarta", title: "COD in jakarta area" },
+      jkt: { edge: "jakarta", title: "pickup in jakarta area" },
       ship: { edge: "elsewhere", title: "JNE or other courier", hint: "plus insurance" }
     },
     id: {
       pick: { title: "pilih tipe yang kamu mau", hint: "model, warna, penyimpanan" },
-      chat: { title: "dm saya di x atau linkedin" },
-      payQ: "deal langsung atau tokopedia?",
-      direct: { edge: "langsung", title: "deal dan bayar ke saya", hint: "rekening di x atau linkedin setelah reservasi" },
+      chat: { title: "masukkan ke bag, lalu bayar", hint: "kartu, apple pay, google pay" },
+      payQ: "di sini atau tokopedia?",
+      direct: { edge: "langsung", title: "checkout di situs ini", hint: "stripe · saya hubungi di x atau linkedin" },
       tokped: { edge: "tokopedia", title: "kita ngobrol dulu, baru saya listing", hint: "+10% plus biaya tokopedia" },
       fly: { title: "saya ke singapura", hint: "sekitar 2 kali sebulan · maks 2 device" },
       tax: { title: "harga sudah termasuk bea cukai", hint: "bm 10% lalu ppn 11%" },
       recvQ: "jakarta atau kirim?",
-      jkt: { edge: "jakarta", title: "COD area jakarta" },
+      jkt: { edge: "jakarta", title: "ambil area jakarta" },
       ship: { edge: "luar kota", title: "JNE atau ekspedisi lain", hint: "plus asuransi" }
     }
   };
