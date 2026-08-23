@@ -219,6 +219,28 @@
     renderSheet();
   }
 
+  function syncPricePop(animateOpen) {
+    document.querySelectorAll(".sale-card").forEach((card) => {
+      const id = card.getAttribute("data-card");
+      const open = state.openPrice === id;
+      const pop = card.querySelector(".price-pop");
+      const btn = card.querySelector(".price-info");
+      if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+      card.classList.toggle("is-price-open", open);
+      if (!pop) return;
+      if (open && animateOpen) {
+        pop.classList.remove("is-open");
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            pop.classList.add("is-open");
+          });
+        });
+      } else {
+        pop.classList.toggle("is-open", open);
+      }
+    });
+  }
+
   function renderGrid() {
     const ul = document.getElementById("sale-grid");
     if (!ul || !state.catalog) return;
@@ -236,7 +258,7 @@
           })
           .join("");
         let pop = "";
-        if (open && window.PIXEL_PRICE && window.PIXEL_PRICE.breakdownRows) {
+        if (window.PIXEL_PRICE && window.PIXEL_PRICE.breakdownRows) {
           const rows = window.PIXEL_PRICE.breakdownRows(v, state.locale);
           pop =
             '<ol class="price-pop">' +
@@ -279,6 +301,7 @@
         </li>`;
       })
       .join("");
+    syncPricePop(false);
   }
 
   function renderBar() {
@@ -426,8 +449,12 @@
       e.stopPropagation();
       const id = info.getAttribute("data-price-info");
       state.openPrice = state.openPrice === id ? null : id;
-      renderGrid();
+      syncPricePop(!!state.openPrice);
       return;
+    }
+    if (state.openPrice && !e.target.closest(".price-pop")) {
+      state.openPrice = null;
+      syncPricePop(false);
     }
     const filter = e.target.closest("[data-filter]");
     if (filter) {
@@ -550,9 +577,15 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("hashchange", setNavCurrent);
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && state.sheetOpen) {
-        state.sheetOpen = false;
-        renderSheet();
+      if (e.key === "Escape") {
+        if (state.openPrice) {
+          state.openPrice = null;
+          syncPricePop(false);
+        }
+        if (state.sheetOpen) {
+          state.sheetOpen = false;
+          renderSheet();
+        }
       }
     });
     const xUrl = CFG.xUrl || "https://x.com/lucaxyzz";
