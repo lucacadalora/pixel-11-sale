@@ -18,7 +18,8 @@
     const fxSgd = CFG.fxSgdIdr || 13936;
     const fxUsd = CFG.fxUsdIdr || 17705;
     const pibUsd = CFG.pibUsd == null ? 500 : CFG.pibUsd;
-    const importRate = CFG.importRate == null ? 0.21 : CFG.importRate;
+    const bmRate = CFG.bmRate == null ? 0.1 : CFG.bmRate;
+    const ppnRate = CFG.ppnRate == null ? 0.11 : CFG.ppnRate;
     const markupIdr = CFG.markupIdr == null ? 5000000 : CFG.markupIdr;
     const officialIdr = sgdAmt * fxSgd;
     const exGstSgd = sgdAmt / (1 + gst);
@@ -26,7 +27,9 @@
     const gstRefundIdr = officialIdr - exGstIdr;
     const pibIdr = pibUsd * fxUsd;
     const taxableIdr = Math.max(0, exGstIdr - pibIdr);
-    const importIdr = taxableIdr * importRate;
+    const bmIdr = taxableIdr * bmRate;
+    const ppnIdr = (taxableIdr + bmIdr) * ppnRate;
+    const importIdr = bmIdr + ppnIdr;
     const askIdr = roundAsk(exGstIdr + importIdr + markupIdr);
     return {
       officialSgd: sgdAmt,
@@ -37,8 +40,10 @@
       pibUsd: pibUsd,
       pibIdr: pibIdr,
       taxableIdr: taxableIdr,
+      bmIdr: bmIdr,
+      ppnIdr: ppnIdr,
       importIdr: importIdr,
-      importRate: importRate,
+      importRate: bmRate + ppnRate * (1 + bmRate),
       markupIdr: markupIdr,
       askIdr: askIdr,
       estimateIdr: officialIdr,
@@ -62,7 +67,9 @@
         { name: "setelah gst", cost: idr(p.exGstIdr) },
         { name: "pib usd 500", cost: "− " + idr(p.pibIdr) },
         { name: "kena pajak", cost: idr(p.taxableIdr) },
-        { name: "bea 21% (ppn + bm)", cost: idr(p.importIdr) },
+        { name: "bm 10%", cost: idr(p.bmIdr) },
+        { name: "ppn 11%", cost: idr(p.ppnIdr) },
+        { name: "bea (bm + ppn)", cost: idr(p.importIdr) },
         { name: "markup", cost: idr(p.markupIdr) },
         { name: "ask", cost: idr(p.askIdr) },
         { name: "untung (gst + markup)", cost: idr(p.profitIdr) }
@@ -74,7 +81,9 @@
       { name: "after gst", cost: idr(p.exGstIdr) },
       { name: "pib usd 500", cost: "− " + idr(p.pibIdr) },
       { name: "taxable", cost: idr(p.taxableIdr) },
-      { name: "import 21% (ppn + bm)", cost: idr(p.importIdr) },
+      { name: "bm 10%", cost: idr(p.bmIdr) },
+      { name: "ppn 11%", cost: idr(p.ppnIdr) },
+      { name: "import (bm + ppn)", cost: idr(p.importIdr) },
       { name: "markup", cost: idr(p.markupIdr) },
       { name: "ask", cost: idr(p.askIdr) },
       { name: "my take (gst + markup)", cost: idr(p.profitIdr) }
