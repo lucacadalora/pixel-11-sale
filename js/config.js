@@ -4,6 +4,7 @@ window.PIXEL_CONFIG = {
   linkedinUrl: "https://www.linkedin.com/in/lucacadalora",
   cityDefault: "Jakarta",
   googleStoreUrl: "https://store.google.com/sg/product/pixel_11",
+  checkoutPath: "/api/checkout",
   fxSgdIdr: 13936,
   fxUsdIdr: 17705,
   fxNote: "SGD Xe mid-market ~21 Aug 2026; USD JISDOR 21 Aug 2026",
