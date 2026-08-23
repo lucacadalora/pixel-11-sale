@@ -130,27 +130,23 @@ header.home-profile{
 .faq-notes{display:none}
 .faq-flow{margin:0;padding:0}
 
-.sale-grid,
-.sale-card,
-.sale-card-body,
-.sale-card-price{
-  overflow:visible;
+.sale-card{
+  position:relative;
+  z-index:1;
 }
+.sale-card.is-price-open{z-index:3}
 .sale-card-price{position:relative}
-.sale-card.is-price-open{z-index:4}
 .sale-price-line--ask{
   display:flex;
   align-items:baseline;
   gap:.45em;
   margin:0 0 .2em;
-  position:relative;
-  z-index:8;
 }
 .sale-price-estimate,
 .sale-price-k{display:none}
 .price-info{
   appearance:none;
-  background:none;
+  background:#fff;
   border:1px solid currentColor;
   border-radius:50%;
   color:inherit;
@@ -164,7 +160,6 @@ header.home-profile{
   opacity:.45;
   padding:0;
   position:relative;
-  z-index:9;
   vertical-align:middle;
   width:1.6em;
 }
@@ -177,21 +172,19 @@ header.home-profile{
   margin:0;
   overflow:hidden;
   opacity:0;
-  padding:0;
-  pointer-events:none !important;
-  transform:translateY(-8px);
+  padding:0 .1em;
+  pointer-events:none;
+  transform:translateY(-6px);
   visibility:hidden;
-  z-index:0;
   transition:opacity .28s ease,transform .28s ease,max-height .32s ease,margin .28s ease;
 }
 .price-pop.is-open{
-  max-height:48em;
+  max-height:52em;
   margin:1em 0 .15em;
   opacity:1;
-  pointer-events:auto !important;
+  pointer-events:auto;
   transform:none;
   visibility:visible;
-  z-index:6;
 }
 .price-pop li{
   display:grid;
@@ -223,29 +216,4 @@ header.home-profile{
 .price-pop *{text-decoration:none !important}
 @media (prefers-reduced-motion:reduce){
   .price-pop{transition:none}
-}
-
-@media (min-width:761px){
-  .price-pop{
-    position:absolute;
-    top:calc(100% + .35em);
-    left:0;
-    box-sizing:border-box;
-    width:22.5em;
-    max-width:min(22.5em,70vw);
-    overflow:hidden;
-    padding:.85em 1.05em 1em;
-    background:#fff;
-    border:1px solid currentColor;
-  }
-  .price-pop.is-open{
-    margin:0;
-    max-height:none;
-    overflow:visible;
-  }
-  .sale-card:nth-child(4n) .price-pop,
-  .sale-card:nth-child(4n-1) .price-pop{
-    left:auto;
-    right:0;
-  }
 }
