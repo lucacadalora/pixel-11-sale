@@ -434,7 +434,18 @@
     }, 4200);
   }
 
+  function onPriceInfo(e) {
+    const info = e.target.closest("[data-price-info]");
+    if (!info) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const id = info.getAttribute("data-price-info");
+    state.openPrice = state.openPrice === id ? null : id;
+    syncPricePop(!!state.openPrice);
+  }
+
   function onClick(e) {
+    if (e.target.closest("[data-price-info]")) return;
     const locale = e.target.closest("[data-locale]");
     if (locale) {
       e.preventDefault();
@@ -443,16 +454,11 @@
       applyLocale();
       return;
     }
-    const info = e.target.closest("[data-price-info]");
-    if (info) {
-      e.preventDefault();
-      e.stopPropagation();
-      const id = info.getAttribute("data-price-info");
-      state.openPrice = state.openPrice === id ? null : id;
-      syncPricePop(!!state.openPrice);
-      return;
-    }
-    if (state.openPrice && !e.target.closest(".price-pop")) {
+    if (
+      state.openPrice &&
+      !e.target.closest(".price-pop") &&
+      !e.target.closest(".sale-price-line--ask")
+    ) {
       state.openPrice = null;
       syncPricePop(false);
     }
@@ -570,6 +576,7 @@
       const res = await fetch("catalog.json");
       state.catalog = await res.json();
     }
+    document.addEventListener("click", onPriceInfo, true);
     document.addEventListener("click", onClick);
     document.addEventListener("input", onInput);
     const form = document.getElementById("sale-reserve-form");
