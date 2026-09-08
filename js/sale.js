@@ -1,1 +1,1 @@
-PLACEHOLDER_SALE
+@/tmp/sale_fixed.js
