@@ -4,6 +4,7 @@ const GST = 0.09;
 const PIB_USD = 500;
 const BM = 0.1;
 const PPN = 0.11;
+const FX_FEE_RATE = 0.02;
 const MARKUP = 5000000;
 const ROUND = 50000;
 
@@ -13,6 +14,10 @@ const OFFICIAL_SGD = {
   "pixel-11-pro-xl": { "256": 1819, "512": 2019, "1tb": 2219 },
   "pixel-11-pro-fold": { "256": 2499, "512": 2699, "1tb": 2899 },
   "mac-mini-m6": { "256": 1299, "512": 1599 }
+};
+
+const ONLINE_NO_GST = {
+  "mac-mini-m6": true
 };
 
 const CARDS = {
@@ -55,6 +60,15 @@ function roundAsk(n) {
 function askIdr(modelId, storage, skipPib) {
   const sgdAmt = ((OFFICIAL_SGD[modelId] || {})[storage] || 0);
   if (!sgdAmt) return 0;
+  if (ONLINE_NO_GST[modelId]) {
+    const officialIdr = sgdAmt * FX_SGD_IDR;
+    const fxFeeIdr = officialIdr * FX_FEE_RATE;
+    const pib = skipPib ? 0 : PIB_USD * FX_USD_IDR;
+    const taxable = Math.max(0, officialIdr - pib);
+    const bm = taxable * BM;
+    const ppn = (taxable + bm) * PPN;
+    return roundAsk(officialIdr + fxFeeIdr + bm + ppn + MARKUP);
+  }
   const exGstSgd = sgdAmt / (1 + GST);
   const exGstIdr = exGstSgd * FX_SGD_IDR;
   const pib = skipPib ? 0 : PIB_USD * FX_USD_IDR;
