@@ -37,7 +37,7 @@
       shop: "shop",
       title: "Mac mini",
       intro:
-        "mac mini m6 from singapore. official apple sg. pre-order, available starting 22 september 2026. tap i next to the ask if you want the math. jakarta pickup or courier.",
+        "mac mini m6 from singapore. bought online at apple store sg — gst stays (no refund). pre-order, available starting 22 september 2026. tap i next to the ask if you want the math. jakarta pickup or courier.",
       add: "add",
       inBag: "in bag",
       bag: "bag",
@@ -49,8 +49,8 @@
       total: "total",
       howTitle: "how this works",
       howBody: [
-        "ask is built from official apple singapore, not grey. 16 gb / 256 gb list s$1,299; 16 gb / 512 gb s$1,599 (+s$300 storage step).",
-        "same math as pixel: official minus 9% gst, minus usd 500 pib, then bm 10% and ppn 11% on the rest (ppn sits on value + bm), plus rp 5.000.000 markup.",
+        "ask is built from official apple singapore online, not grey. 16 gb / 256 gb list s$1,299; 16 gb / 512 gb s$1,599 (+s$300 storage step).",
+        "online path: gst stays in the official price (no gst refund). taxable is official minus usd 500 pib, then bm 10% and ppn 11% on the rest (ppn sits on value + bm), plus 2% fx fee and rp 5.000.000 markup.",
         "pre-order now — units start 22 september 2026. add a config (max 2), then pay with card, apple pay, or google pay. i'll ping you on x or linkedin about delivery."
       ],
       contactTitle: "contact",
@@ -66,7 +66,7 @@
       shop: "shop",
       title: "Mac mini",
       intro:
-        "mac mini m6 dari singapura. harga resmi apple sg. pre-order, tersedia mulai 22 september 2026. ketuk i di samping ask kalau mau lihat hitungannya. ambil jakarta atau kurir.",
+        "mac mini m6 dari singapura. beli online di apple store sg — gst tetap (tidak di-refund). pre-order, tersedia mulai 22 september 2026. ketuk i di samping ask kalau mau lihat hitungannya. ambil jakarta atau kurir.",
       add: "add",
       inBag: "in bag",
       bag: "bag",
@@ -78,8 +78,8 @@
       total: "total",
       howTitle: "cara kerjanya",
       howBody: [
-        "ask dari harga resmi apple singapura. 16 gb / 256 gb s$1.299; 16 gb / 512 gb s$1.599 (+s$300).",
-        "hitungannya sama seperti pixel: resmi minus gst 9%, minus pib usd 500, lalu bm 10% dan ppn 11% dari sisa (ppn di nilai + bm), plus markup rp 5.000.000.",
+        "ask dari harga resmi apple singapura online. 16 gb / 256 gb s$1.299; 16 gb / 512 gb s$1.599 (+s$300).",
+        "jalur online: gst tetap di harga resmi (tidak di-refund). kena pajak = resmi minus pib usd 500, lalu bm 10% dan ppn 11% dari sisa (ppn di nilai + bm), plus biaya fx 2% dan markup rp 5.000.000.",
         "pre-order sekarang — unit mulai 22 september 2026. masukkan config (maks 2), lalu bayar dengan kartu, apple pay, atau google pay. saya hubungi di x atau linkedin soal pengiriman."
       ],
       contactTitle: "kontak",
@@ -145,7 +145,7 @@
     return window.PIXEL_PRICE.breakdownRows(p, state.locale).map(function (r) {
       return {
         name: String(r.name)
-          .replace(/google store/gi, "apple")
+          .replace(/google store/gi, "apple store")
           .replace(/google/gi, "apple"),
         cost: r.cost
       };
