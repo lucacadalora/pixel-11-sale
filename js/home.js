@@ -3,7 +3,7 @@
   const I18N = {
     en: {
       home: "home",
-      sale: "sale",
+      sale: "pixel 11",
       macMini: "mac mini",
       shop: "shop",
       headline: "sovereign AI with jatevo.ai · AI software factory with vantis.sh",
@@ -20,7 +20,7 @@
       roleItb: "Bachelor, Chemical Engineering",
       nowBody: "sealed pixel 11 from changi. add to bag on the sale page. collaborative review incoming with nerd reviews.",
       payBody: "this is my page, not a faceless shop. add a phone, then pay on stripe checkout — card, apple pay, or google pay. i'll ping you on x or linkedin about delivery.",
-      linkSale: "shop pixel 11",
+      linkSale: "shop pixel 11 series",
       linkMacMini: "shop mac mini",
       linkTokped: "tokopedia / gadgetsing",
       linkNerd: "nerd reviews",
@@ -39,7 +39,7 @@
     },
     id: {
       home: "home",
-      sale: "sale",
+      sale: "pixel 11",
       macMini: "mac mini",
       shop: "shop",
       headline: "sovereign AI di jatevo.ai · pabrik software AI di vantis.sh",
@@ -56,7 +56,7 @@
       roleItb: "S1 Teknik Kimia",
       nowBody: "pixel 11 sealed dari changi. masukkan ke bag di halaman sale. review bareng nerd reviews segera.",
       payBody: "ini halaman saya, bukan toko tanpa muka. masukkan HP, lalu bayar di stripe checkout — kartu, apple pay, atau google pay. saya hubungi di x atau linkedin soal pengiriman.",
-      linkSale: "shop pixel 11",
+      linkSale: "shop pixel 11 series",
       linkMacMini: "shop mac mini",
       linkTokped: "tokopedia / gadgetsing",
       linkNerd: "nerd reviews",
