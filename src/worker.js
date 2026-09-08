@@ -1,4 +1,4 @@
-const FX_SGD_IDR = 13936;
+const FX_SGD_IDR = 13926;
 const FX_USD_IDR = 17705;
 const GST = 0.09;
 const PIB_USD = 500;
@@ -11,7 +11,8 @@ const OFFICIAL_SGD = {
   "pixel-11": { "256": 1299, "512": 1499 },
   "pixel-11-pro": { "256": 1599, "512": 1799, "1tb": 1999 },
   "pixel-11-pro-xl": { "256": 1819, "512": 2019, "1tb": 2219 },
-  "pixel-11-pro-fold": { "256": 2499, "512": 2699, "1tb": 2899 }
+  "pixel-11-pro-fold": { "256": 2499, "512": 2699, "1tb": 2899 },
+  "mac-mini-m6": { "256": 1299, "512": 1599 }
 };
 
 const CARDS = {
@@ -27,7 +28,9 @@ const CARDS = {
   "pixel-11-pro-xl-olive": { modelId: "pixel-11-pro-xl", category: "Pixel 11 Pro XL", title: "Olive", storages: ["256", "512"] },
   "pixel-11-pro-xl-fog": { modelId: "pixel-11-pro-xl", category: "Pixel 11 Pro XL", title: "Fog", storages: ["256", "512"] },
   "pixel-11-pro-xl-matte-obsidian": { modelId: "pixel-11-pro-xl", category: "Pixel 11 Pro XL", title: "Matte Obsidian", storages: ["256", "512", "1tb"] },
-  "pixel-11-pro-fold-obsidian": { modelId: "pixel-11-pro-fold", category: "Pixel 11 Pro Fold", title: "Obsidian", storages: ["256", "512", "1tb"] }
+  "pixel-11-pro-fold-obsidian": { modelId: "pixel-11-pro-fold", category: "Pixel 11 Pro Fold", title: "Obsidian", storages: ["256", "512", "1tb"] },
+  "mac-mini-m6-256": { modelId: "mac-mini-m6", category: "Mac mini", title: "16 / 256", storages: ["256"] },
+  "mac-mini-m6-512": { modelId: "mac-mini-m6", category: "Mac mini", title: "16 / 512", storages: ["512"] }
 };
 
 function json(data, status) {
@@ -100,12 +103,13 @@ async function checkout(request, env) {
     lines.push(line);
   }
   const origin = new URL(request.url).origin;
+  const cancelPath = lines.some(function (l) { return l.modelId === "mac-mini-m6"; }) ? "/mac-mini" : "/sale";
   const pairs = [
     ["mode", "payment"],
     ["currency", "idr"],
     ["automatic_payment_methods[enabled]", "true"],
     ["success_url", origin + "/success.html?session_id={CHECKOUT_SESSION_ID}"],
-    ["cancel_url", origin + "/sale"],
+    ["cancel_url", origin + cancelPath],
     ["shipping_address_collection[allowed_countries][]", "ID"],
     ["phone_number_collection[enabled]", "true"]
   ];
@@ -138,6 +142,14 @@ export default {
     if (url.pathname === "/api/checkout") {
       if (request.method !== "POST") return json({ error: "method" }, 405);
       return checkout(request, env);
+    }
+    if (url.pathname === "/mac-mini" || url.pathname === "/mac-mini/") {
+      const assetUrl = new URL("/mac-mini.html", url.origin);
+      return env.ASSETS.fetch(new Request(assetUrl, request));
+    }
+    if (url.pathname === "/sale" || url.pathname === "/sale/") {
+      const assetUrl = new URL("/sale.html", url.origin);
+      return env.ASSETS.fetch(new Request(assetUrl, request));
     }
     return env.ASSETS.fetch(request);
   }
