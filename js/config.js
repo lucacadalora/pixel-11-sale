@@ -13,8 +13,10 @@ window.PIXEL_CONFIG = {
   pibUsd: 500,
   bmRate: 0.10,
   ppnRate: 0.11,
+  fxFeeRate: 0.02,
   markupIdr: 5000000,
   askRoundTo: 50000,
+  onlineNoGstModels: ["mac-mini-m6"],
   officialSgd: {
     "pixel-11": { "256": 1299, "512": 1499 },
     "pixel-11-pro": { "256": 1599, "512": 1799, "1tb": 1999 },
