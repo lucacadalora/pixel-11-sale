@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac mini — Singapore to Indonesia</title>
+  <meta name="description" content="mac mini m6 from singapore. official apple sg sgd. jakarta pickup or courier. pre-order from 22 september 2026.">
+  <meta property="og:title" content="Mac mini — Singapore to Indonesia">
+  <meta property="og:description" content="official apple singapore price, asked in rupiah. jakarta pickup or courier.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-hero-202410?wid=1200&amp;hei=900&amp;fmt=jpeg&amp;qlt=90">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+  <nav class="small page-top-nav" aria-label="primary">
+    <ul class="h-list">
+      <li><a href="index.html" data-i18n="home">home</a></li>
+      <li><a href="sale.html" data-i18n="sale">sale</a></li>
+      <li><a href="mac-mini.html" class="current" aria-current="page" data-i18n="macMini">mac mini</a></li>
+      <li><a href="https://www.tokopedia.com/gadgetsing" target="_blank" rel="noopener" data-i18n="shop">shop</a></li>
+    </ul>
+    <button type="button" class="nav-bag" id="nav-bag" data-open-sheet>bag</button>
+  </nav>
+
+  <header class="big sale-header" id="top">
+    <span data-i18n="title">Mac mini</span>
+  </header>
+
+  <section class="small sale" id="sale">
+    <p class="sale-intro" id="sale-intro">mac mini m6 from singapore. official apple sg. pre-order, available starting 22 september 2026. tap i next to the ask if you want the math. jakarta pickup or courier.</p>
+
+    <ul class="sale-grid" id="sale-grid"></ul>
+  </section>
+
+  <section class="small sale-anchor" id="how">
+    <div class="sale-copy">
+      <h2 data-i18n="howTitle">how this works</h2>
+      <div id="how-body"></div>
+    </div>
+  </section>
+
+  <section class="small sale-anchor" id="contact">
+    <div class="sale-copy">
+      <h2 data-i18n="contactTitle">contact</h2>
+      <p data-i18n="contactBody">dm me on x or linkedin.</p>
+      <p>
+        <a class="underline" id="x-link" href="https://x.com/lucaxyzz" target="_blank" rel="noopener">x.com/lucaxyzz</a>
+        <br>
+        <a class="underline" id="li-link" href="https://www.linkedin.com/in/lucacadalora" target="_blank" rel="noopener">linkedin.com/in/lucacadalora</a>
+      </p>
+    </div>
+  </section>
+
+  <footer class="small page-footer">
+    <div>
+      <a href="#how" data-i18n="how">how</a><br>
+      <a href="#sale" data-i18n="macMini">mac mini</a><br>
+      <a href="https://www.apple.com/sg/mac-mini/" rel="noopener" target="_blank" data-i18n="footerApple">apple sg</a>
+    </div>
+    <div>
+      <a id="footer-x" href="https://x.com/lucaxyzz" target="_blank" rel="noopener">x</a><br>
+      <a id="footer-li" href="https://www.linkedin.com/in/lucacadalora" target="_blank" rel="noopener">linkedin</a>
+    </div>
+    <div class="lang-switcher">
+      <a href="#en" data-locale="en" class="current">en</a>
+      /
+      <a href="#id" data-locale="id">id</a>
+    </div>
+  </footer>
+
+  <span class="sale-reserve-target" id="nav-bag-target" aria-hidden="true"></span>
+
+  <div class="sale-reserve-bar" id="sale-reserve-bar" hidden></div>
+  <div class="sale-reserve-bar sale-reserve-confirm" id="sale-reserve-confirm" role="status" hidden></div>
+
+  <div class="sale-reserve-layer" id="sale-reserve-layer" hidden>
+    <button type="button" class="sale-reserve-backdrop" data-close-sheet aria-label="close"></button>
+    <section class="sale-reserve-sheet" role="dialog" aria-modal="true" aria-labelledby="sale-reserve-title">
+      <header class="sale-reserve-sheet-head">
+        <h2 id="sale-reserve-title" data-i18n="drawerTitle">bag</h2>
+        <button type="button" class="sale-reserve-cancel" data-close-sheet data-i18n="cancel">close</button>
+      </header>
+      <ul class="sale-reserve-items" id="sale-reserve-items"></ul>
+      <div class="sale-reserve-form" id="sale-reserve-form">
+        <p class="sale-reserve-error" id="sale-reserve-error" hidden data-i18n="error">couldn't start checkout. try again?</p>
+        <div class="sale-reserve-actions">
+          <button type="button" class="sale-reserve-cancel" data-close-sheet data-i18n="cancel">close</button>
+          <button type="button" class="sale-reserve-submit" id="sale-pay" data-i18n="pay">pay</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <button type="button" class="scroll-to-top" id="scroll-to-top" aria-label="back to top" tabindex="-1" aria-hidden="true">
+    <span aria-hidden="true">↑</span>
+  </button>
+
+  <script src="js/config.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/mac-mini.js"></script>
+</body>
+</html>
