@@ -1,1 +1,1 @@
-PLACEHOLDER_WILL_FAIL
+__LOAD_FROM__/workspace/og/og-profile-b64.js
