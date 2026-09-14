@@ -1,3 +1,5 @@
+import { OG_PROFILE_JPEG_B64 } from "./og-profile-b64.js";
+
 const FX_SGD_IDR = 13926;
 const FX_USD_IDR = 17705;
 const GST = 0.09;
@@ -42,6 +44,17 @@ function json(data, status) {
   return new Response(JSON.stringify(data), {
     status: status || 200,
     headers: { "content-type": "application/json; charset=utf-8" }
+  });
+}
+
+function ogProfileJpeg() {
+  const bin = Uint8Array.from(atob(OG_PROFILE_JPEG_B64), function (c) { return c.charCodeAt(0); });
+  return new Response(bin, {
+    headers: {
+      "content-type": "image/jpeg",
+      "cache-control": "public, max-age=86400",
+      "access-control-allow-origin": "*"
+    }
   });
 }
 
@@ -152,6 +165,9 @@ async function checkout(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === "/og-profile.jpg" || url.pathname === "/photos/og-profile.jpg") {
+      return ogProfileJpeg();
+    }
     if (url.pathname === "/api/health") return json({ ok: true });
     if (url.pathname === "/api/checkout") {
       if (request.method !== "POST") return json({ error: "method" }, 405);
