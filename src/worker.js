@@ -173,6 +173,10 @@ export default {
       if (request.method !== "POST") return json({ error: "method" }, 405);
       return checkout(request, env);
     }
+    if (url.pathname === "/garage" || url.pathname === "/garage/") {
+      const assetUrl = new URL("/garage.html", url.origin);
+      return env.ASSETS.fetch(new Request(assetUrl, request));
+    }
     if (url.pathname === "/mac-mini" || url.pathname === "/mac-mini/") {
       const assetUrl = new URL("/mac-mini.html", url.origin);
       return env.ASSETS.fetch(new Request(assetUrl, request));
