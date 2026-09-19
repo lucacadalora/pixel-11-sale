@@ -30,14 +30,11 @@
         "short notes from people who bought through me. real drops only — including posts from x.",
       howTitle: "how this works",
       howBody: [
-        "bought something through me? dm on x or linkedin if you want to leave a short note.",
-        "nerd reviews collab incoming — separate from these buyer notes."
+        "bought something through me? dm on x or linkedin if you want to leave a short note."
       ],
       contactTitle: "contact",
       contactBody: "dm me on x or linkedin.",
       empty: "reviews coming soon…",
-      nerdTitle: "nerd reviews",
-      nerdBody: "collaborative review incoming — not a buyer note.",
       footerHow: "how",
       starsLabel: "5 stars"
     },
@@ -53,14 +50,11 @@
         "catatan singkat dari yang beli lewat saya. yang nyata saja — termasuk post dari x.",
       howTitle: "cara kerjanya",
       howBody: [
-        "beli lewat saya? dm di x atau linkedin kalau mau ninggalin catatan singkat.",
-        "kolaborasi nerd reviews segera — terpisah dari catatan pembeli."
+        "beli lewat saya? dm di x atau linkedin kalau mau ninggalin catatan singkat."
       ],
       contactTitle: "kontak",
       contactBody: "dm saya di x atau linkedin.",
       empty: "review segera…",
-      nerdTitle: "nerd reviews",
-      nerdBody: "review kolaborasi segera — bukan catatan pembeli.",
       footerHow: "cara",
       starsLabel: "5 bintang"
     }
