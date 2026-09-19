@@ -1,7 +1,21 @@
 (function () {
   const CFG = window.PIXEL_CONFIG || {};
 
-  const REVIEWS = [];
+  const REVIEWS = [
+    {
+      id: "zaka-2101177783200387265",
+      name: "Ahmad Zakaria",
+      handle: "za_ka",
+      city: "",
+      device: "Pixel jastip",
+      body: "Thank you ya @lucaxyzz jastipnya. Trusted seller nih...",
+      stars: 5,
+      photo: "https://pbs.twimg.com/media/HSjiDPUbwAAlayz.jpg",
+      date: "19 Sep 2026",
+      tweetUrl: "https://x.com/za_ka/status/2101177783200387265",
+      tweetId: "2101177783200387265"
+    }
+  ];
 
   const I18N = {
     en: {
@@ -13,7 +27,7 @@
       shop: "shop",
       title: "Reviews",
       intro:
-        "short notes from people who bought through me. no star walls — just real drops.",
+        "short notes from people who bought through me. real drops only — including posts from x.",
       howTitle: "how this works",
       howBody: [
         "bought something through me? dm on x or linkedin if you want to leave a short note.",
@@ -24,7 +38,8 @@
       empty: "reviews coming soon…",
       nerdTitle: "nerd reviews",
       nerdBody: "collaborative review incoming — not a buyer note.",
-      footerHow: "how"
+      footerHow: "how",
+      starsLabel: "5 stars"
     },
     id: {
       home: "home",
@@ -35,7 +50,7 @@
       shop: "shop",
       title: "Reviews",
       intro:
-        "catatan singkat dari yang beli lewat saya. tanpa bintang palsu — yang ada saja.",
+        "catatan singkat dari yang beli lewat saya. yang nyata saja — termasuk post dari x.",
       howTitle: "cara kerjanya",
       howBody: [
         "beli lewat saya? dm di x atau linkedin kalau mau ninggalin catatan singkat.",
@@ -46,7 +61,8 @@
       empty: "review segera…",
       nerdTitle: "nerd reviews",
       nerdBody: "review kolaborasi segera — bukan catatan pembeli.",
-      footerHow: "cara"
+      footerHow: "cara",
+      starsLabel: "5 bintang"
     }
   };
 
@@ -64,6 +80,40 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function starsHtml(n) {
+    const count = Math.max(0, Math.min(5, Number(n) || 0));
+    if (!count) return "";
+    return (
+      '<p class="review-card-stars" aria-label="' +
+      escapeHtml(t("starsLabel")) +
+      '">' +
+      "★".repeat(count) +
+      '<span class="review-card-stars-empty">' +
+      "☆".repeat(5 - count) +
+      "</span></p>"
+    );
+  }
+
+  function tweetEmbedHtml(r) {
+    if (!r.tweetUrl) return "";
+    return (
+      '<div class="review-tweet">' +
+      '<blockquote class="twitter-tweet" data-dnt="true" data-theme="light">' +
+      "<p>" +
+      escapeHtml(r.body || "") +
+      "</p>" +
+      '&mdash; @' +
+      escapeHtml(r.handle || "") +
+      ' <a href="' +
+      escapeHtml(r.tweetUrl) +
+      '">' +
+      escapeHtml(r.date || "") +
+      "</a>" +
+      "</blockquote>" +
+      "</div>"
+    );
   }
 
   function applyLocale() {
@@ -88,6 +138,20 @@
     renderGrid();
   }
 
+  function loadTweetWidgets() {
+    if (!document.querySelector(".twitter-tweet")) return;
+    if (window.twttr && window.twttr.widgets && window.twttr.widgets.load) {
+      window.twttr.widgets.load();
+      return;
+    }
+    if (document.getElementById("twitter-wjs")) return;
+    const s = document.createElement("script");
+    s.id = "twitter-wjs";
+    s.async = true;
+    s.src = "https://platform.twitter.com/widgets.js";
+    document.body.appendChild(s);
+  }
+
   function renderGrid() {
     const ul = document.getElementById("reviews-grid");
     if (!ul) return;
@@ -103,7 +167,9 @@
       return;
     }
     ul.innerHTML = REVIEWS.map(function (r) {
-      const meta = [r.city, r.device].filter(Boolean).join(" · ");
+      const meta = [r.city, r.device, r.handle ? "@" + r.handle : ""]
+        .filter(Boolean)
+        .join(" · ");
       const photo = r.photo
         ? '<div class="sale-card-media"><img src="' +
           escapeHtml(r.photo) +
@@ -112,12 +178,18 @@
       const date = r.date
         ? '<p class="review-card-meta">' + escapeHtml(r.date) + "</p>"
         : "";
+      const link = r.tweetUrl
+        ? '<p class="review-card-meta"><a class="underline" href="' +
+          escapeHtml(r.tweetUrl) +
+          '" target="_blank" rel="noopener">view on x</a></p>'
+        : "";
       return (
         '<li class="sale-card review-card" data-review="' +
         escapeHtml(r.id) +
         '">' +
         photo +
         '<div class="sale-card-body">' +
+        starsHtml(r.stars) +
         (meta
           ? '<p class="sale-card-category review-card-meta">' +
             escapeHtml(meta) +
@@ -130,10 +202,13 @@
         escapeHtml(r.body || "") +
         "</p>" +
         date +
+        link +
+        tweetEmbedHtml(r) +
         "</div>" +
         "</li>"
       );
     }).join("");
+    loadTweetWidgets();
   }
 
   function prefersReducedMotion() {
