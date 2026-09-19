@@ -129,3 +129,8 @@ body.sheet-open{overflow:hidden}
 .scroll-to-top.is-visible{opacity:.45;pointer-events:auto}
 .review-card-meta{opacity:.45}
 .review-card-quote{margin:.45em 0 0;opacity:.85;line-height:1.45}
+
+.review-card-stars{margin:0 0 .35em;letter-spacing:.08em;font-size:1.05em;line-height:1}
+.review-card-stars-empty{opacity:.25}
+.review-tweet{margin-top:1em;max-width:100%;overflow:hidden}
+.review-tweet .twitter-tweet{margin:0 !important}
