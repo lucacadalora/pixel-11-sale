@@ -11,6 +11,7 @@
       sale: "pixel 11",
       macMini: "mac mini",
       garage: "garage",
+      reviews: "reviews",
       shop: "shop",
       title: "Garage Sale",
       intro:
@@ -31,6 +32,7 @@
       sale: "pixel 11",
       macMini: "mac mini",
       garage: "garage",
+      reviews: "reviews",
       shop: "shop",
       title: "Garage Sale",
       intro:
