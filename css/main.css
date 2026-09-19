@@ -127,3 +127,5 @@ body.sheet-open{overflow:hidden}
 .pay-logo.pay-flag{border-radius:.12em;height:1em;width:1.4em}
 .scroll-to-top{position:fixed;right:2.5vw;bottom:2.5vw;opacity:0;border:0;background:none;pointer-events:none}
 .scroll-to-top.is-visible{opacity:.45;pointer-events:auto}
+.review-card-meta{opacity:.45}
+.review-card-quote{margin:.45em 0 0;opacity:.85;line-height:1.45}
