@@ -1,21 +1,49 @@
+/* NB International — discrete weights (static faces; range breaks matching) */
 @font-face {
   font-family: "nbintl";
-  src:
-    url("https://ryo.lu/fonts/NBInternationalPro.woff2") format("woff2"),
-    url("https://ryo.lu/fonts/NBInternationalPro.woff") format("woff"),
-    url("https://ryo.lu/fonts/NBInternationalPro.otf") format("opentype");
+  src: url("https://ryo.lu/fonts/NBInternationalPro.woff2") format("woff2"),
+       url("https://ryo.lu/fonts/NBInternationalPro.woff") format("woff");
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
 }
-
+@font-face {
+  font-family: "nbintl";
+  src: url("https://ryo.lu/fonts/NBInternationalPro.woff2") format("woff2"),
+       url("https://ryo.lu/fonts/NBInternationalPro.woff") format("woff");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "nbintl";
+  src: url("https://ryo.lu/fonts/NBInternationalPro.woff2") format("woff2"),
+       url("https://ryo.lu/fonts/NBInternationalPro.woff") format("woff");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "nbintl";
+  src: url("https://ryo.lu/fonts/NBInternationalPro.woff2") format("woff2"),
+       url("https://ryo.lu/fonts/NBInternationalPro.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
 @font-face {
   font-family: "nbintl-mono";
-  src:
-    url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff2") format("woff2"),
-    url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff") format("woff"),
-    url("https://ryo.lu/fonts/NBInternationalPro-Mono.otf") format("opentype");
+  src: url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff2") format("woff2"),
+       url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff") format("woff");
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "nbintl-mono";
+  src: url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff2") format("woff2"),
+       url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff") format("woff");
+  font-style: normal;
+  font-weight: 500;
   font-display: swap;
 }
