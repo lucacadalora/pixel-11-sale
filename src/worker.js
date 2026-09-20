@@ -189,6 +189,10 @@ export default {
       const assetUrl = new URL("/sale.html", url.origin);
       return env.ASSETS.fetch(new Request(assetUrl, request));
     }
+    if (url.pathname === "/blog" || url.pathname === "/blog/") {
+      const assetUrl = new URL("/blog.html", url.origin);
+      return env.ASSETS.fetch(new Request(assetUrl, request));
+    }
     return env.ASSETS.fetch(request);
   }
 };
