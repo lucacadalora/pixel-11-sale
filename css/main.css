@@ -1,10 +1,11 @@
+/* font-fix-20260921 */
 /* --- pixel-site: fonts + sale extras (match ryo.lu NB International) --- */
 :root{
   --header-font-family:"nbintl","Hiragino Sans","Yu Gothic",YuGothic,sans-serif;
   --body-font-family:"nbintl-mono","Hiragino Sans","Yu Gothic",YuGothic,ui-monospace,monospace;
 }
 body{font-family:var(--body-font-family);margin:0;padding:0;background:#fff;color:#111}
-.big,.sale-header,.sale-card-title,.sale-reserve-sheet-head h2,.journal-entry-title,.home-block h2{
+.big,.sale-header,.sale-card-title,.sale-reserve-sheet-head h2,.journal-entry-title,.home-block h2,.home-name{
   font-family:var(--header-font-family);
   font-weight:500
 }
