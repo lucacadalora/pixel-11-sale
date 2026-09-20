@@ -4,8 +4,9 @@
   --body-font-family:"nbintl-mono","Hiragino Sans","Yu Gothic",YuGothic,ui-monospace,monospace;
 }
 body{font-family:var(--body-font-family);margin:0;padding:0;background:#fff;color:#111}
-.big,.sale-card-title,.sale-reserve-sheet-head h2,.journal-entry-title{
-  font-family:var(--header-font-family)
+.big,.sale-header,.sale-card-title,.sale-reserve-sheet-head h2,.journal-entry-title,.home-block h2{
+  font-family:var(--header-font-family);
+  font-weight:500
 }
 .small{font-size:1.33333vw;letter-spacing:.05em;line-height:1.2em}
 @media (min-width:1440px){.sale-reserve-sheet,.small{font-size:16px;line-height:1.3em}}
@@ -50,7 +51,7 @@ a{color:#111;text-decoration:none}
 .sale-card-media img{display:block;height:100%;object-fit:contain;width:100%}
 .sale-card-body{display:flex;flex-direction:column;flex:1}
 .sale-card-category{font-size:.85em;letter-spacing:.08em;margin:0 0 .35em;opacity:.45;text-transform:uppercase}
-.sale-card-title{font-size:1.35em;font-weight:500;margin:0 0 .35em}
+.sale-card-title{font-size:1.35em;margin:0 0 .35em}
 .sale-price-row{display:inline-flex;flex-wrap:wrap;gap:.45em .65em}
 .sale-price-estimate{opacity:.4;text-decoration:line-through}
 .sale-chip,.sale-reserve-btn,.sale-reserve-cancel,.sale-reserve-submit{appearance:none;background:none;border:0;color:inherit;cursor:pointer;font:inherit}
@@ -93,7 +94,7 @@ footer.page-footer>div{flex:1 1}
   border-left:1px solid currentColor;
 }
 .sale-reserve-sheet-head{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 1.2em}
-.sale-reserve-sheet-head h2{font-size:1.5em;font-weight:500;margin:0}
+.sale-reserve-sheet-head h2{font-size:1.5em;margin:0}
 .sale-reserve-form{display:grid;gap:1.1rem;width:100%;margin:0}
 .sale-reserve-form input,.sale-reserve-form textarea{border:0;border-bottom:1px solid #1113;font:inherit;width:100%;padding:.45em 0}
 .sale-reserve-items{list-style:none;width:100%;margin:0 0 1.4em;padding:0}
@@ -112,11 +113,11 @@ footer.page-footer>div{flex:1 1}
 body.sheet-open{overflow:hidden}
 .home-profile{display:flex;align-items:center;gap:1.6rem;max-width:1510px;padding:1.2rem 10vw .8rem}
 .home-photo{width:min(9.5rem,28vw);height:min(9.5rem,28vw);object-fit:cover;border-radius:50%;object-position:50% 18%}
-.home-name{font-size:clamp(28px,4.2vw,64px);line-height:1.15;margin:0 0 .25em}
+.home-name{font-family:var(--header-font-family);font-size:clamp(28px,4.2vw,64px);font-weight:500;letter-spacing:-0.015em;line-height:1.15;margin:0 0 .25em}
 .home-headline{margin:0 0 .45em;opacity:.75}
 .home-meta{margin:0;opacity:.5}
 .home-block{margin:0 0 2.6em;max-width:36em}
-.home-block h2{font-family:var(--header-font-family);font-size:1.35em;font-weight:500;margin:0 0 .7em}
+.home-block h2{font-size:1.35em;margin:0 0 .7em}
 .home-cv{list-style:none;margin:0;padding:0}
 .home-cv li{margin:0 0 1em}
 .home-cv-role{display:block;margin-top:.2em;opacity:.5}
