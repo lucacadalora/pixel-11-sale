@@ -1,7 +1,7 @@
-/* --- pixel-site: fonts + sale extras (keep ryo sale-* intact) --- */
+/* --- pixel-site: fonts + sale extras (match ryo.lu NB International) --- */
 :root{
-  --header-font-family:"Geist","Schibsted Grotesk",nbintl,sans-serif;
-  --body-font-family:"Geist Mono","IBM Plex Mono",nbintl-mono,ui-monospace,monospace;
+  --header-font-family:"nbintl","Hiragino Sans","Yu Gothic",YuGothic,sans-serif;
+  --body-font-family:"nbintl-mono","Hiragino Sans","Yu Gothic",YuGothic,ui-monospace,monospace;
 }
 body{font-family:var(--body-font-family);margin:0;padding:0;background:#fff;color:#111}
 .big,.sale-card-title,.sale-reserve-sheet-head h2,.journal-entry-title{
