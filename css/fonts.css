@@ -1,13 +1,21 @@
 @font-face {
   font-family: "nbintl";
-  src: local("Geist"), local("Schibsted Grotesk");
+  src:
+    url("https://ryo.lu/fonts/NBInternationalPro.woff2") format("woff2"),
+    url("https://ryo.lu/fonts/NBInternationalPro.woff") format("woff"),
+    url("https://ryo.lu/fonts/NBInternationalPro.otf") format("opentype");
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400 700;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "nbintl-mono";
-  src: local("Geist Mono"), local("IBM Plex Mono");
+  src:
+    url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff2") format("woff2"),
+    url("https://ryo.lu/fonts/NBInternationalPro-Mono.woff") format("woff"),
+    url("https://ryo.lu/fonts/NBInternationalPro-Mono.otf") format("opentype");
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 700;
+  font-display: swap;
 }
